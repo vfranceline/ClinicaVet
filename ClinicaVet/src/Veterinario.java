@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+
 public class Veterinario extends Pessoa {
-    protect String especialidade;
-    protect String cfmv;
+    protected String especialidade;
+    protected String cfmv;
+    private ArrayList<Consulta> consultas;
 
     public Veterinario(String nome, String cpf, String email, String telefone, String especialidade, String cfmv) {
         super(nome, cpf, email, telefone);
         this.especialidade = especialidade;
         this.cfmv = cfmv;
+        this.consultas = new ArrayList<>();
     }
 
     public String getEspecialidade() {
@@ -22,5 +26,17 @@ public class Veterinario extends Pessoa {
 
     public void setCfmv(String cfmv) {
         this.cfmv = cfmv;
+    }
+    
+    public ArrayList<Consulta> getConsultas() {
+        return consultas;
+    }
+    
+    public void adicionarConsulta(Consulta consulta) {
+        consultas.add(consulta);
+    }
+
+    public void removerConsulta(Consulta consulta) {
+        consultas.remove(consulta);
     }
 }
