@@ -1,4 +1,4 @@
-public class Veterinario {
+public class Veterinario extends Pessoa {
     protect String especialidade;
     protect String cfmv;
 
