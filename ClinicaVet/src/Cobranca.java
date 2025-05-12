@@ -1,22 +1,14 @@
+import java.util.ArrayList;
+
 public class Cobranca {
-    private double valor;
     private Data data;
-    private String tipo;
-    private int parcelas; // clquei essa + cas cliente esclha parcelar
+    private int parcelas;
+    private ArrayList<ItemCobranca> itens;
 
-    public Cobranca(double valor, Data data, String tipo, int parcelas) {
-        this.valor = valor;
+    public Cobranca(Data data, int parcelas) {
         this.data = data;
-        this.tipo = tipo;
         this.parcelas = parcelas;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
+        this.itens = new ArrayList<>();
     }
 
     public Data getData() {
@@ -27,19 +19,35 @@ public class Cobranca {
         this.data = data;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public int getParcelas() {
         return parcelas;
     }
 
     public void setParcelas(int parcelas) {
         this.parcelas = parcelas;
+    }
+
+    public void addItem(ItemCobranca item) {
+        itens.add(item);
+    }
+
+    public void removerItem(ItemCobranca item) {
+        itens.remove(item);
+    }
+
+    public ArrayList<ItemCobranca> getItens() {
+        return itens;
+    }
+
+    public double getValorTotal() {
+        double total = 0;
+        for (ItemCobranca item : itens) {
+            total += item.getValor();
+        }
+        return total;
+    }
+
+    public double getValorParcela() {
+        return getValorTotal() / parcelas;
     }
 }
