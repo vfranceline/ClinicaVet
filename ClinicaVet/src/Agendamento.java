@@ -1,29 +1,29 @@
 public class Agendamento {
-    private Data dataConsulta;
-    private Horario hora;
+    private String dataConsulta;
+    private String hora;
     private String especialidade;
     private Animal animal;
 
-    public Agendamento(Data dataConsulta, Horario hora, String especialidade) {
+    public Agendamento(String dataConsulta, String hora, String especialidade, Animal animal) {
         this.dataConsulta = dataConsulta;
         this.hora = hora;
         this.especialidade = especialidade;
         this.animal = animal;
     }
 
-    public Data getDataConsulta() {
+    public String getDataConsulta() {
         return dataConsulta;
     }
 
-    public void setDataConsulta(Data dataConsulta) {
+    public void setDataConsulta(String dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 
-    public Horario getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Horario hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
