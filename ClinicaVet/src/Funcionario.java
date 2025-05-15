@@ -1,5 +1,5 @@
 public class Funcionario extends Pessoa{
-    protect String turnoDeTrabalho;
+    protected String turnoDeTrabalho;
 
     public Funcionario(String nome, String cpf, String email, String telefone, String turnoDeTrabalho) {
         super(nome, cpf, email, telefone);

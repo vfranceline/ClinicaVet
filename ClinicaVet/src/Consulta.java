@@ -2,12 +2,12 @@ public class Consulta {
     //Atributos
     private Veterinario nome, especialidade;
     private String problema, diagnostico, medicamento;
-    private Horario inicio;
+    private String inicio;
     private double preco;
 
     //Construtor
     public Consulta(Veterinario nome, Veterinario especialidade, String problema, String diagnostico,
-                    String medicamento, Horario inicio, double preco){
+                    String medicamento, String inicio, double preco){
         this.nome = nome;
         this.especialidade = especialidade;
         this.problema = problema;
@@ -33,8 +33,8 @@ public class Consulta {
     public String getMedicamento(){ return medicamento; }
     public void setMedicamento(String medicamento){ this.medicamento = medicamento; }
 
-    public Horario getInicio(){ return inicio; }
-    public void setInicio(Horario inicio){ this.inicio = inicio; }
+    public String getInicio(){ return inicio; }
+    public void setInicio(String inicio){ this.inicio = inicio; }
 
     public double getPreco(){ return preco; }
     public void setPreco(double preco){ this.preco = preco; }

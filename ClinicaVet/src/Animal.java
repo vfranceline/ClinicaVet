@@ -2,11 +2,11 @@ public class Animal {
     private String nome;
     private String raca;
     private Tutor nomeTutor;
-    private Data dataDeNascimento;
+    private String dataDeNascimento;
     private ArrayList<Consulta> consultas;
     private ArrayList<Vacina> vacinas;
 
-    public Animal(String nome, String raca, Tutor nomeTutor, Data dataDeNascimento) {
+    public Animal(String nome, String raca, Tutor nomeTutor, String dataDeNascimento) {
         this.nome = nome;
         this.raca = raca;
         this.nomeTutor = nomeTutor;
@@ -39,11 +39,11 @@ public class Animal {
         this.nomeTutor = nomeTutor;
     }
 
-    public Data getDataDeNascimento() {
+    public String getDataDeNascimento() {
         return dataDeNascimento;
     }
 
-    public void setDataDeNascimento(Data dataDeNascimento) {
+    public void setDataDeNascimento(String dataDeNascimento) {
         this.dataDeNascimento = dataDeNascimento;
     }
 

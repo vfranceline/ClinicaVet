@@ -1,21 +1,21 @@
 import java.util.ArrayList;
 
 public class Cobranca {
-    private Data data;
+    private String data;
     private int parcelas;
     private ArrayList<ItemCobranca> itens;
 
-    public Cobranca(Data data, int parcelas) {
+    public Cobranca(String data, int parcelas) {
         this.data = data;
         this.parcelas = parcelas;
         this.itens = new ArrayList<>();
     }
 
-    public Data getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(String data) {
         this.data = data;
     }
 

@@ -1,10 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartaoVacina {
     //Atributos
     private String nome;
-    private Data validade, data;
+    private String validade, data;
+    private List<Vacina> vacinas = new ArrayList<>(); 
 
     //Construtor
-    public CartaoVacina(String nome, Data validade, Data data){
+    public CartaoVacina(String nome, String validade, String data){
         this.nome = nome;
         this.validade = validade;
         this.data = data;
@@ -15,8 +19,8 @@ public class CartaoVacina {
     public void setNome(String nome){ this.nome = nome; }
 
     public Data getValidade(){ return validade;}
-    public void setValidade(Data validade){ this.validade = validade; }
+    public void setValidade(String validade){ this.validade = validade; }
 
     public Data getData(){ return data; }
-    public void setData(Data data){ this.data = data; }
+    public void setData(String data){ this.data = data; }
 }
