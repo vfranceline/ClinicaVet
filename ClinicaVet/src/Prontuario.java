@@ -1,7 +1,6 @@
-// src/Prontuario.java
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-public class Prontuario implements Imprimivel{
+public class Prontuario implements Imprimivel {
     private ArrayList<Consulta> consultas;
 
     public Prontuario() {
@@ -20,31 +19,22 @@ public class Prontuario implements Imprimivel{
         consultas.remove(consulta);
     }
 
-    /**
-     * gera texto para impressão, listando as consultas da mais recente para a mais antiga.
-     * @return string com o conteúdo exibido
-     */
-    
     @Override
     public String gerarConteudoImpressao() {
-        String textoFinal = "--- Prontuário do Animal ---\n";
-        textoFinal += "----------------------------\n";
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        StringBuilder textoFinal = new StringBuilder("--- Prontuário do Animal ---\n");
+        textoFinal.append("----------------------------\n");
 
-        // laço 'for' para percorrer a lista de consultas DE TRÁS PARA FRENTE.
         for (int i = consultas.size() - 1; i >= 0; i--) {
             Consulta consultaAtual = this.consultas.get(i);
-
-            Veterinario veterinarioDaConsulta = consultaAtual.getVeterinario();
-
-            textoFinal += "Data: " + consultaAtual.getDataConsulta() + "\n";
-            textoFinal += "Veterinário: " + veterinarioDaConsulta.getNome() + "\n";
-            textoFinal += "Problema: " + consultaAtual.getProblema() + "\n";
-            textoFinal += "Diagnóstico: " + consultaAtual.getDiagnostico() + "\n";
-            textoFinal += "Medicamentos: " + consultaAtual.getMedicamento() + "\n";
-            textoFinal += "----------------------------\n";
+            textoFinal.append("Data: ").append(consultaAtual.getDataConsulta().format(formatador)).append("\n");
+            textoFinal.append("Veterinário: ").append(consultaAtual.getVeterinario().getNome()).append("\n");
+            textoFinal.append("Problema: ").append(consultaAtual.getProblema()).append("\n");
+            textoFinal.append("Diagnóstico: ").append(consultaAtual.getDiagnostico()).append("\n");
+            textoFinal.append("Medicamentos: ").append(consultaAtual.getMedicamento()).append("\n");
+            textoFinal.append("----------------------------\n");
         }
 
-        return textoFinal;
+        return textoFinal.toString();
     }
-    
 }

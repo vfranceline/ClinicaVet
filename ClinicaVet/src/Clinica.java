@@ -1,5 +1,7 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Clinica {
 
     private List<Animal> animais;
@@ -16,11 +18,6 @@ public class Clinica {
         this.agendamentos = new ArrayList<>();
     }
 
-    /**
-     * calcula e exibe o valor total de um atendimento
-     * @param tutor tutor responsável pelo pagamento
-     * @param itens lista de itens que implementam a interface Faturavel (Consultas, Vacinas) 
-     */
     public double emitirCobranca(Tutor tutor, List<Faturavel> itens) {
         double total = 0;
         for (Faturavel item : itens) {
@@ -30,10 +27,6 @@ public class Clinica {
         return total;
     }
 
-    /**
-     * print um documento genérico
-     * @param documento objeto que implementa a interface Imprimivel (Prontuario, CartaoVacina) 
-     */
     public void imprimirDocumento(Imprimivel documento) { 
         System.out.println(documento.gerarConteudoImpressao());
     }
@@ -107,18 +100,11 @@ public class Clinica {
         }
         return removido;
     }
-
-    public void realizarConsulta(Animal animal, Consulta consulta) {
-        animal.adicionarConsulta(consulta);
-        System.out.println("Consulta registrada para " + animal.getNome());
-    }
-
-    public void aplicarVacina(Animal animal, Vacina vacina, String dataDeAplicacao, String dataDeValidade) {
+    
+    public void aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
         VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);
-
         animal.getCartaoVacina().adicionarVacinaAplicada(novaAplicacao);
-
-        System.out.println("Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + " na data " + dataDeAplicacao + ".");
+        System.out.println("Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + ".");
     }
 
     public void consultarVacinasAVencer(Animal animal, int mes, int ano) {
@@ -128,26 +114,17 @@ public class Clinica {
         boolean encontrou = false;
 
         for (VacinaAplicada vacinaApp : vacinasDoAnimal) {
-            String dataValidade = vacinaApp.getDataDeValidade(); // Formato esperado: "DD/MM/AAAA"
+            LocalDate dataValidade = vacinaApp.getDataDeValidade();
             
-            // Quebra a string da data para extrair mês e ano
-            String[] partesData = dataValidade.split("/");
-            
-            if (partesData.length == 3) { // Verifica se o formato da data está correto
-                int mesVacina = Integer.parseInt(partesData[1]);
-                int anoVacina = Integer.parseInt(partesData[2]);
-
-                // Compara com o mês e ano desejados
-                if (mesVacina == mes && anoVacina == ano) {
-                    System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + " (Validade: " + dataValidade + ")");
-                    encontrou = true;
-                }
+            if (dataValidade.getMonthValue() == mes && dataValidade.getYear() == ano) {
+                System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + " (Validade: " + dataValidade.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")");
+                encontrou = true;
             }
         }
 
         if (!encontrou) {
             System.out.println("Nenhuma vacina encontrada com vencimento para esta data.");
         }
-    System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 }

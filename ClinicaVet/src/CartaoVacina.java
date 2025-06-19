@@ -1,6 +1,7 @@
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-public class CartaoVacina implements Imprimivel{
+public class CartaoVacina implements Imprimivel {
     private List<VacinaAplicada> vacinasAplicadas;
 
     public CartaoVacina() {
@@ -15,21 +16,19 @@ public class CartaoVacina implements Imprimivel{
         return vacinasAplicadas;
     }
 
-    /**
-     * Gera texto para impressão, listando as vacinas aplicadas.
-     * @return string com o conteúdo a ser exibido.
-     */
     @Override
-    public String gerarConteudoImpressao(){
-        String textoFinal = "--- Cartão de Vacinas ---\n";
-        textoFinal += "---------------------------\n";
+    public String gerarConteudoImpressao() {
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        StringBuilder textoFinal = new StringBuilder("--- Cartão de Vacinas ---\n");
+        textoFinal.append("---------------------------\n");
 
-        for(VacinaAplicada vacinaAplicada : this.vacinasAplicadas){
-            textoFinal += "Vacina: " + vacinaAplicada.getVacina().getNome() + "\n";
-            textoFinal += "Data de aplicação: " + vacinaAplicada.getDataDeAplicacao() + "\n";
-            textoFinal += "Data de validade: " + vacinaAplicada.getDataDeValidade() + "\n";
-            textoFinal += "---------------------------\n";
+        for (VacinaAplicada vacinaApp : this.vacinasAplicadas) {
+            textoFinal.append("Vacina: ").append(vacinaApp.getVacina().getNome()).append("\n");
+            textoFinal.append("Data de Aplicação: ").append(vacinaApp.getDataDeAplicacao().format(formatador)).append("\n");
+            textoFinal.append("Data de Validade: ").append(vacinaApp.getDataDeValidade().format(formatador)).append("\n");
+            textoFinal.append("---------------------------\n");
         }
-        return textoFinal;
+
+        return textoFinal.toString();
     }
 }

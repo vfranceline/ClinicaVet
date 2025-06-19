@@ -1,16 +1,17 @@
+import java.time.LocalDate;
 public class VacinaAplicada {
     private Vacina vacina;
-    private String dataDeAplicacao;
-    private String dataDeValidade;
+    private LocalDate dataDeAplicacao; // Alterado de String para LocalDate
+    private LocalDate dataDeValidade;  // Alterado de String para LocalDate
 
-    public VacinaAplicada(Vacina vacina, String dataDeAplicacao, String dataDeValidade) {
+    public VacinaAplicada(Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) { // Construtor atualizado
         this.vacina = vacina;
         this.dataDeAplicacao = dataDeAplicacao;
         this.dataDeValidade = dataDeValidade;
     }
     
-    // Getters
+    // Getters atualizados
     public Vacina getVacina() { return vacina; }
-    public String getDataDeAplicacao() { return dataDeAplicacao; }
-    public String getDataDeValidade() { return dataDeValidade; }
+    public LocalDate getDataDeAplicacao() { return dataDeAplicacao; }
+    public LocalDate getDataDeValidade() { return dataDeValidade; }
 }
