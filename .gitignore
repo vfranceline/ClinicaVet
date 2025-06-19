@@ -1,0 +1,5 @@
+# Compiled source #
+*.class
+
+# Ignore the .vscode files
+.vscode
