@@ -1,18 +1,18 @@
 public class Animal {
     private String nome;
     private String raca;
-    private Tutor nomeTutor;
+    private Tutor tutor;
     private String dataDeNascimento;
-    private ArrayList<Consulta> consultas;
-    private ArrayList<Vacina> vacinas;
+    private CartaoVacina cartaoVacina;
+    private Prontuario prontuario;
 
-    public Animal(String nome, String raca, Tutor nomeTutor, String dataDeNascimento) {
+    public Animal(String nome, String raca, Tutor tutor, String dataDeNascimento) {
         this.nome = nome;
         this.raca = raca;
-        this.nomeTutor = nomeTutor;
+        this.tutor = tutor;
         this.dataDeNascimento = dataDeNascimento;
-        this.consultas = new ArrayList<>();
-        this.vacinas = new ArrayList<>();
+        this.cartaoVacina = new CartaoVacina();
+        this.prontuario= new Prontuario();
     }
 
     public String getNome() {
@@ -31,12 +31,12 @@ public class Animal {
         this.raca = raca;
     }
 
-    public Tutor getNomeTutor() {
-        return nomeTutor;
+    public Tutor getTutor() {
+        return tutor;
     }
 
-    public void setNomeTutor(Tutor nomeTutor) {
-        this.nomeTutor = nomeTutor;
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
 
     public String getDataDeNascimento() {
@@ -47,19 +47,20 @@ public class Animal {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public ArrayList<Consulta> getConsultas() {
-        return consultas;
+    public CartaoVacina getCartaoVacina() {
+        return cartaoVacina; 
     }
 
     public void adicionarConsulta(Consulta consulta) {
-        consultas.add(consulta);
+        this.prontuario.adicionarConsulta(consulta);
     }
 
-    public ArrayList<Vacina> getVacinas() {
-        return vacinas;
+    public Prontuario getProntuario() {
+        return prontuario;
     }
 
-    public void adicionarVacina(Vacina vacina) {
-        vacinas.add(vacina);
+    public void setProntuario(Prontuario prontuario) {
+        this.prontuario = prontuario;
     }
 }
+

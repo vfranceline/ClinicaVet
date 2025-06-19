@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class Veterinario extends Pessoa {
+public class Veterinario extends Funcionario {
     protected String especialidade;
     protected String cfmv;
     private ArrayList<Consulta> consultas;
 
-    public Veterinario(String nome, String cpf, String email, String telefone, String especialidade, String cfmv) {
-        super(nome, cpf, email, telefone);
+    public Veterinario(String nome, String cpf, String email, String telefone, String especialidade, String cfmv, String turnoDeTrabalho) {
+        super(nome, cpf, email, telefone, turnoDeTrabalho);
         this.especialidade = especialidade;
         this.cfmv = cfmv;
         this.consultas = new ArrayList<>();
