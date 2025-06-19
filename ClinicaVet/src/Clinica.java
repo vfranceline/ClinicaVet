@@ -113,24 +113,41 @@ public class Clinica {
         System.out.println("Consulta registrada para " + animal.getNome());
     }
 
-    // public void aplicarVacina(Animal animal, Vacina vacina, String data, String validade) {
-    //     vacina.setDataDeVacina(data);
-    //     vacina.setValidade(validade);
-    //     animal.adicionarVacina(vacina); 
-    //     System.out.println("Vacina " + vacina.getNome() + " aplicada em " + animal.getNome() + " na data " + data);
-    // }
+    public void aplicarVacina(Animal animal, Vacina vacina, String dataDeAplicacao, String dataDeValidade) {
+        VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);
 
+        animal.getCartaoVacina().adicionarVacinaAplicada(novaAplicacao);
 
-    // public void consultarVacinasAVencer(Animal animal, int mes, int ano) {
-    //     System.out.println("--- Vacinas a vencer em " + mes + "/" + ano + " para " + animal.getNome() + " ---");
-    //     for (Vacina vacina : animal.getVacinas()) { // Supondo método getVacinas()
-    //         String[] partes = vacina.getValidade().split("/"); // Supondo formato "MM/AAAA"
-    //         int mesVacina = Integer.parseInt(partes[0]);
-    //         int anoVacina = Integer.parseInt(partes[1]);
-    //         if (mesVacina == mes && anoVacina == ano) {
-    //             System.out.println("- " + vacina.getNome() + " (Validade: " + vacina.getValidade() + ")");
-    //         }
-    //     }
-    // }
+        System.out.println("Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + " na data " + dataDeAplicacao + ".");
+    }
 
+    public void consultarVacinasAVencer(Animal animal, int mes, int ano) {
+        System.out.println("\n--- Consultando vacinas a vencer em " + String.format("%02d", mes) + "/" + ano + " para " + animal.getNome() + " ---");
+        
+        List<VacinaAplicada> vacinasDoAnimal = animal.getCartaoVacina().getVacinasAplicadas();
+        boolean encontrou = false;
+
+        for (VacinaAplicada vacinaApp : vacinasDoAnimal) {
+            String dataValidade = vacinaApp.getDataDeValidade(); // Formato esperado: "DD/MM/AAAA"
+            
+            // Quebra a string da data para extrair mês e ano
+            String[] partesData = dataValidade.split("/");
+            
+            if (partesData.length == 3) { // Verifica se o formato da data está correto
+                int mesVacina = Integer.parseInt(partesData[1]);
+                int anoVacina = Integer.parseInt(partesData[2]);
+
+                // Compara com o mês e ano desejados
+                if (mesVacina == mes && anoVacina == ano) {
+                    System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + " (Validade: " + dataValidade + ")");
+                    encontrou = true;
+                }
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma vacina encontrada com vencimento para esta data.");
+        }
+    System.out.println("--------------------------------------------------");
+    }
 }

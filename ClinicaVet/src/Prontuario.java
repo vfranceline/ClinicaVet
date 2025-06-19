@@ -34,9 +34,9 @@ public class Prontuario implements Imprimivel{
         for (int i = consultas.size() - 1; i >= 0; i--) {
             Consulta consultaAtual = this.consultas.get(i);
 
-            Veterinario veterinarioDaConsulta = consultaAtual.getNome();
+            Veterinario veterinarioDaConsulta = consultaAtual.getVeterinario();
 
-            textoFinal += "Data: " + consultaAtual.getInicio() + "\n";
+            textoFinal += "Data: " + consultaAtual.getDataConsulta() + "\n";
             textoFinal += "Veterinário: " + veterinarioDaConsulta.getNome() + "\n";
             textoFinal += "Problema: " + consultaAtual.getProblema() + "\n";
             textoFinal += "Diagnóstico: " + consultaAtual.getDiagnostico() + "\n";

@@ -1,26 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
+public class CartaoVacina implements Imprimivel{
+    private List<VacinaAplicada> vacinasAplicadas;
 
-public class CartaoVacina {
-    //Atributos
-    private String nome;
-    private String validade, data;
-    private List<Vacina> vacinas = new ArrayList<>(); 
-
-    //Construtor
-    public CartaoVacina(String nome, String validade, String data){
-        this.nome = nome;
-        this.validade = validade;
-        this.data = data;
+    public CartaoVacina() {
+        this.vacinasAplicadas = new ArrayList<>();
     }
 
-    //Getters e Setters
-    public String getNome(){ return nome; }
-    public void setNome(String nome){ this.nome = nome; }
+    public void adicionarVacinaAplicada(VacinaAplicada vacina) {
+        this.vacinasAplicadas.add(vacina);
+    }
 
-    public Data getValidade(){ return validade;}
-    public void setValidade(String validade){ this.validade = validade; }
+    public List<VacinaAplicada> getVacinasAplicadas() {
+        return vacinasAplicadas;
+    }
 
-    public Data getData(){ return data; }
-    public void setData(String data){ this.data = data; }
+    /**
+     * Gera texto para impressão, listando as vacinas aplicadas.
+     * @return string com o conteúdo a ser exibido.
+     */
+    @Override
+    public String gerarConteudoImpressao(){
+        String textoFinal = "--- Cartão de Vacinas ---\n";
+        textoFinal += "---------------------------\n";
+
+        for(VacinaAplicada vacinaAplicada : this.vacinasAplicadas){
+            textoFinal += "Vacina: " + vacinaAplicada.getVacina().getNome() + "\n";
+            textoFinal += "Data de aplicação: " + vacinaAplicada.getDataDeAplicacao() + "\n";
+            textoFinal += "Data de validade: " + vacinaAplicada.getDataDeValidade() + "\n";
+            textoFinal += "---------------------------\n";
+        }
+        return textoFinal;
+    }
 }
