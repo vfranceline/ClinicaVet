@@ -102,6 +102,20 @@ public class Clinica {
         }
         return removido;
     }
+
+    /**
+     * Centraliza a lógica para realizar e registrar uma consulta no prontuário do animal.
+     * @param animal O animal que está sendo consultado.
+     * @param consulta O objeto da consulta com todos os detalhes.
+     */
+    // public void realizarConsulta(Animal animal, Consulta consulta) {
+    //     if (animal != null && consulta != null) {
+    //         animal.adicionarConsulta(consulta);
+    //         System.out.println("Consulta registrada no prontuário de " + animal.getNome() + ".");
+    //     } else {
+    //         System.out.println("Erro: Animal ou consulta inválidos.");
+    //     }
+    // }
     
     public void aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
         VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);

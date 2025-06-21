@@ -32,24 +32,38 @@ public class App {
         clinica.cadastrarAnimal(petMongryong);
         System.out.println();
 
-        // 4. Atendimento do pet do Suho
+        // 4. Demonstração de Agendamento e Cancelamento
+        System.out.println("--- Gerenciando Agendamentos ---");
+        LocalDate dataAgendamento = LocalDate.of(2025, 7, 10);
+        Agendamento agendamentoMongryong = new Agendamento(dataAgendamento, "10:00", "Check-up Anual", petMongryong);
+
+        // Agendando a consulta
+        clinica.agendar(agendamentoMongryong);
+
+        // Cancelando a consulta
+        System.out.println("Baekhyun precisa cancelar o agendamento devido a um show...");
+        clinica.cancelarAgendamento(agendamentoMongryong);
+        System.out.println();
+
+        // 5. Atendimento do pet do Suho
         System.out.println("--- Realizando Atendimento para 'Bunny' ---");
         LocalDate dataConsulta = LocalDate.of(2025, 6, 19);
-        Consulta consultaBunny = new Consulta(vetKyungsoo, "Tosse depois de latir muito no show", "Excesso de fofura", "Dar mais petiscos e carinho", dataConsulta, 250.00);
-        petBunny.adicionarConsulta(consultaBunny);
-        System.out.println("Consulta para '" + petBunny.getNome() + "' registrada no prontuário.\n");
+        Consulta consultaBunny = new Consulta(vetKyungsoo, "Tosse depois de latir muito no show", "Excesso de fofura", 
+                                                "Dar mais petiscos e carinho", dataConsulta, 250.00);
+        clinica.realizarConsulta(petBunny, consultaBunny); // Necessita de um método realizarConsulta melhor elaborado na classe Clínica!!!
+        System.out.println();
 
-        // 5. Aplicação de uma Vacina no pet do Suho
+        // 6. Aplicação de uma Vacina no pet do Suho
         System.out.println("--- Aplicando Vacina em 'Bunny' ---");
         Vacina vacinaV10 = new Vacina("V10 (Múltipla)", 120.00);
         clinica.aplicarVacina(petBunny, vacinaV10, dataConsulta, dataConsulta.plusYears(1));
         System.out.println();
 
-        // 6. Consultar vacinas a vencer no pet do Suho
+        // 7. Consulta de Vacinas a vencer
         System.out.println("--- Consultando Vacina em 'Bunny' ---");
-        clinica.consultarVacinasAVencer(petBunny, dataConsulta);
-        
-        // 7. Gerar Cobrança para o Suho
+        clinica.consultarVacinasAVencer(petBunny, dataConsulta.plusYears(1).minusDays(15));
+
+        // 8. Gerar Cobrança para o Suho
         System.out.println("--- Gerando Faturamento para Suho ---");
         List<Faturavel> itensFaturaveisSuho = new ArrayList<>();
         itensFaturaveisSuho.add(consultaBunny);
@@ -57,7 +71,7 @@ public class App {
         clinica.emitirCobranca(tutorSuho, itensFaturaveisSuho);
         System.out.println();
 
-        // 8. Impressão de Documentos do Bunny
+        // 9. Impressão de Documentos do Bunny
         System.out.println("--- Imprimindo Documentos de 'Bunny' ---\n");
         clinica.imprimirDocumento(petBunny.getProntuario());
         clinica.imprimirDocumento(petBunny.getCartaoVacina());
