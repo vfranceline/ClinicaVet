@@ -1,26 +1,46 @@
 import java.time.LocalDate;
 public class Agendamento {
-    private LocalDate dataConsulta; // Alterado de String para LocalDate
+    private LocalDate dataConsulta;
     private String hora;
     private String especialidade;
     private Animal animal;
 
-    public Agendamento(LocalDate dataConsulta, String hora, String especialidade, Animal animal) { // Construtor atualizado
+    public Agendamento(LocalDate dataConsulta, String hora, String especialidade, Animal animal) { 
         this.dataConsulta = dataConsulta;
         this.hora = hora;
         this.especialidade = especialidade;
         this.animal = animal;
     }
 
-    public LocalDate getDataConsulta() { return dataConsulta; } // Retorna LocalDate
-    public void setDataConsulta(LocalDate dataConsulta) { this.dataConsulta = dataConsulta; } // Recebe LocalDate
+    public LocalDate getDataConsulta() {
+        return dataConsulta; 
+    } 
 
-    public String getHora() { return hora; }
-    public void setHora(String hora) { this.hora = hora; }
+    public void setDataConsulta(LocalDate dataConsulta) { 
+        this.dataConsulta = dataConsulta; 
+    }
 
-    public String getEspecialidade() { return especialidade; }
-    public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
+    public String getHora() { 
+        return hora; 
+    }
 
-    public Animal getAnimal() { return animal; }
-    public void setAnimal(Animal animal) { this.animal = animal; }
+    public void setHora(String hora) { 
+        this.hora = hora;
+    }
+
+    public String getEspecialidade() { 
+        return especialidade; 
+    }
+
+    public void setEspecialidade(String especialidade) { 
+        this.especialidade = especialidade; 
+    }
+
+    public Animal getAnimal() { 
+        return animal; 
+    }
+
+    public void setAnimal(Animal animal) { 
+        this.animal = animal; 
+    }
 }

@@ -1,4 +1,3 @@
-// src/Imprimivel.java
 public interface Imprimivel {
     /**
      * Gera o conteúdo formatado para impressão.
