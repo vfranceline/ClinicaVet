@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,8 @@ public class Clinica {
         if (this.tutores.contains(novoAnimal.getTutor())) {
             this.animais.add(novoAnimal);
             novoAnimal.getTutor().addAnimal(novoAnimal); 
-            System.out.println("Animal " + novoAnimal.getNome() + " cadastrado com sucesso para o tutor " + novoAnimal.getTutor().getNome() + "!");
+            System.out.println("Animal " + novoAnimal.getNome() + " cadastrado com sucesso para o tutor " 
+                                + novoAnimal.getTutor().getNome() + "!");
         } else {
             System.out.println("ERRO: Não foi possível cadastrar o animal, pois seu tutor não foi encontrado na clínica.");
         }
@@ -107,8 +109,18 @@ public class Clinica {
         System.out.println("Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + ".");
     }
 
-    public void consultarVacinasAVencer(Animal animal, int mes, int ano) {
-        System.out.println("\n--- Consultando vacinas a vencer em " + String.format("%02d", mes) + "/" + ano + " para " + animal.getNome() + " ---");
+    /**
+     * Consulta e exibe as vacinas de um animal que vencerão nos próximos 30 dias
+     * a partir de uma data de referência.
+     * @param animal O animal a ser consultado.
+     * @param dataReferencia A data a partir da qual a verificação será feita (ex: hoje).
+     */
+    public void consultarVacinasAVencer(Animal animal, LocalDate dataReferencia) {
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataLimite = dataReferencia.plusDays(30);
+
+        System.out.println("\n--- Consultando vacinas a vencer para '" + animal.getNome() + "' (entre " + dataReferencia.format(formatador)
+                            + " e " + dataLimite.format(formatador) + ") ---");
         
         List<VacinaAplicada> vacinasDoAnimal = animal.getCartaoVacina().getVacinasAplicadas();
         boolean encontrou = false;
@@ -116,8 +128,11 @@ public class Clinica {
         for (VacinaAplicada vacinaApp : vacinasDoAnimal) {
             LocalDate dataValidade = vacinaApp.getDataDeValidade();
             
-            if (dataValidade.getMonthValue() == mes && dataValidade.getYear() == ano) {
-                System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + " (Validade: " + dataValidade.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")");
+            // Verifica se a data de validade está DEPOIS da data de referência
+            // E ANTES (ou no mesmo dia) da data limite de 30 dias.
+            if (!dataValidade.isBefore(dataReferencia) && !dataValidade.isAfter(dataLimite)) {
+                System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + 
+                                    " (Validade: " + dataValidade.format(formatador) + ")");
                 encontrou = true;
             }
         }

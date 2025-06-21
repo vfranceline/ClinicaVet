@@ -34,18 +34,22 @@ public class App {
 
         // 4. Atendimento do pet do Suho
         System.out.println("--- Realizando Atendimento para 'Bunny' ---");
-        LocalDate hoje = LocalDate.of(2025, 6, 19);
-        Consulta consultaBunny = new Consulta(vetKyungsoo, "Tosse depois de latir muito no show", "Excesso de fofura", "Dar mais petiscos e carinho", hoje, 250.00);
+        LocalDate dataConsulta = LocalDate.of(2025, 6, 19);
+        Consulta consultaBunny = new Consulta(vetKyungsoo, "Tosse depois de latir muito no show", "Excesso de fofura", "Dar mais petiscos e carinho", dataConsulta, 250.00);
         petBunny.adicionarConsulta(consultaBunny);
         System.out.println("Consulta para '" + petBunny.getNome() + "' registrada no prontuário.\n");
 
         // 5. Aplicação de uma Vacina no pet do Suho
         System.out.println("--- Aplicando Vacina em 'Bunny' ---");
         Vacina vacinaV10 = new Vacina("V10 (Múltipla)", 120.00);
-        clinica.aplicarVacina(petBunny, vacinaV10, hoje, hoje.plusYears(1));
+        clinica.aplicarVacina(petBunny, vacinaV10, dataConsulta, dataConsulta.plusYears(1));
         System.out.println();
 
-        // 6. Gerar Cobrança para o Suho
+        // 6. Consultar vacinas a vencer no pet do Suho
+        System.out.println("--- Consultando Vacina em 'Bunny' ---");
+        clinica.consultarVacinasAVencer(petBunny, dataConsulta);
+        
+        // 7. Gerar Cobrança para o Suho
         System.out.println("--- Gerando Faturamento para Suho ---");
         List<Faturavel> itensFaturaveisSuho = new ArrayList<>();
         itensFaturaveisSuho.add(consultaBunny);
@@ -53,7 +57,7 @@ public class App {
         clinica.emitirCobranca(tutorSuho, itensFaturaveisSuho);
         System.out.println();
 
-        // 7. Impressão de Documentos do Bunny
+        // 8. Impressão de Documentos do Bunny
         System.out.println("--- Imprimindo Documentos de 'Bunny' ---\n");
         clinica.imprimirDocumento(petBunny.getProntuario());
         clinica.imprimirDocumento(petBunny.getCartaoVacina());
