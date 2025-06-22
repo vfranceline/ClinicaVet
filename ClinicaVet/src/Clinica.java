@@ -108,14 +108,14 @@ public class Clinica {
      * @param animal O animal que está sendo consultado.
      * @param consulta O objeto da consulta com todos os detalhes.
      */
-    // public void realizarConsulta(Animal animal, Consulta consulta) {
-    //     if (animal != null && consulta != null) {
-    //         animal.adicionarConsulta(consulta);
-    //         System.out.println("Consulta registrada no prontuário de " + animal.getNome() + ".");
-    //     } else {
-    //         System.out.println("Erro: Animal ou consulta inválidos.");
-    //     }
-    // }
+    public void realizarConsulta(Animal animal, Consulta consulta) {
+        if (animal != null && consulta != null) {
+            animal.adicionarConsulta(consulta);
+            System.out.println("Consulta registrada no prontuário de " + animal.getNome() + ".");
+        } else {
+            System.out.println("Erro: Animal ou consulta inválidos.");
+        }
+    }
     
     public void aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
         VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);
@@ -124,8 +124,7 @@ public class Clinica {
     }
 
     /**
-     * Consulta e exibe as vacinas de um animal que vencerão nos próximos 30 dias
-     * a partir de uma data de referência.
+     * Consulta e exibe as vacinas de um animal que vencerão nos próximos 30 dias a partir de uma data de referência.
      * @param animal O animal a ser consultado.
      * @param dataReferencia A data a partir da qual a verificação será feita (ex: hoje).
      */
