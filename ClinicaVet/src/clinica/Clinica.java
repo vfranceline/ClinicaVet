@@ -17,14 +17,14 @@ public class Clinica {
         this.veterinarios = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
-    }
+    } 
 
     public double emitirCobranca(Tutor tutor, List<Faturavel> itens) {
         double total = 0;
         for (Faturavel item : itens) {
             total += item.calcularValor();
         }
-        System.out.println("Valor total para o tutor " + tutor.getNome() + ": R$ " + total);
+        // System.out.println("Valor total para o tutor " + tutor.getNome() + ": R$ " + total);
         return total;
     }
 
@@ -32,33 +32,32 @@ public class Clinica {
         System.out.println(documento.gerarConteudoImpressao());
     }
 
-    public void cadastrarTutor(Tutor novoTutor){
+    public String cadastrarTutor(Tutor novoTutor){
         if (buscarTutor(novoTutor.getCpf()) != null) {
-            System.out.println("Tutor com CPF " + novoTutor.getCpf() + " já está cadastrado.");
-            return;
+            return "Tutor com CPF " + novoTutor.getCpf() + " já está cadastrado.";
+            
         }
         this.tutores.add(novoTutor);
-        System.out.println("Tutor " + novoTutor.getNome() + " cadastrado com sucesso!");
+        return "Tutor " + novoTutor.getNome() + " cadastrado com sucesso!";
     }
 
-    public void cadastrarAnimal(Animal novoAnimal){
+    public String cadastrarAnimal(Animal novoAnimal){
         if (this.tutores.contains(novoAnimal.getTutor())) {
             this.animais.add(novoAnimal);
             novoAnimal.getTutor().addAnimal(novoAnimal); 
-            System.out.println("Animal " + novoAnimal.getNome() + " cadastrado com sucesso para o tutor " 
-                                + novoAnimal.getTutor().getNome() + "!");
+            return "Animal " + novoAnimal.getNome() + " cadastrado com sucesso para o tutor " 
+                                + novoAnimal.getTutor().getNome() + "!";
         } else {
-            System.out.println("ERRO: Não foi possível cadastrar o animal, pois seu tutor não foi encontrado na clínica.");
+            return "ERRO: Não foi possível cadastrar o animal, pois seu tutor não foi encontrado na clínica.";
         }
     }
 
-    public void cadastrarVeterinario(Veterinario novoVet) {
+    public String cadastrarVeterinario(Veterinario novoVet) {
          if (buscarVeterinario(novoVet.getCpf()) != null) {
-            System.out.println("Veterinário com CPF " + novoVet.getCpf() + " já está cadastrado.");
-            return;
+            return "Veterinário com CPF " + novoVet.getCpf() + " já está cadastrado.";
         }
         this.veterinarios.add(novoVet);
-        System.out.println("Veterinário " + novoVet.getNome() + " cadastrado com sucesso!");
+        return "Veterinário " + novoVet.getNome() + " cadastrado com sucesso!";
     }
 
     public Tutor buscarTutor(String cpf){
@@ -88,19 +87,18 @@ public class Clinica {
         return null;
     }
 
-    public void agendar(Agendamento agendamento) {
+    public String agendar(Agendamento agendamento) {
         agendamentos.add(agendamento);
-        System.out.println("Agendamento para " + agendamento.getAnimal().getNome() + " realizado!");
+        return "Agendamento para " + agendamento.getAnimal().getNome() + " realizado!";
     }
 
-    public boolean cancelarAgendamento(Agendamento agendamento) {
+    public String cancelarAgendamento(Agendamento agendamento) {
         boolean removido = agendamentos.remove(agendamento);
         if (removido) {
-            System.out.println("Agendamento cancelado com sucesso.");
+            return "Agendamento cancelado com sucesso.";
         } else {
-            System.out.println("Agendamento não encontrado.");
+            return "Agendamento não encontrado.";
         }
-        return removido;
     }
 
     /**
@@ -108,19 +106,19 @@ public class Clinica {
      * @param animal O animal que está sendo consultado.
      * @param consulta O objeto da consulta com todos os detalhes.
      */
-    public void realizarConsulta(Animal animal, Consulta consulta) {
+    public String realizarConsulta(Animal animal, Consulta consulta) {
         if (animal != null && consulta != null) {
             animal.adicionarConsulta(consulta);
-            System.out.println("Consulta registrada no prontuário de " + animal.getNome() + ".");
+            return "Consulta registrada no prontuário de " + animal.getNome() + ".";
         } else {
-            System.out.println("Erro: Animal ou consulta inválidos.");
+            return "Erro: Animal ou consulta inválidos.";
         }
     }
     
-    public void aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
+    public String aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
         VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);
         animal.getCartaoVacina().adicionarVacinaAplicada(novaAplicacao);
-        System.out.println("Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + ".");
+        return "Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + ".";
     }
 
     /**
@@ -154,5 +152,18 @@ public class Clinica {
             System.out.println("Nenhuma vacina encontrada com vencimento para esta data.");
         }
         System.out.println("--------------------------------------------------");
+    }
+
+    //gets
+    public List<Tutor> getTutores() {
+        return tutores;
+    }
+
+    public List<Animal> getAnimais() {
+        return animais;
+    }
+
+    public List<Veterinario> getVeterinarios() {
+        return veterinarios;
     }
 }
