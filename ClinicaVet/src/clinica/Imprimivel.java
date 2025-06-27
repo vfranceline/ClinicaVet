@@ -1,3 +1,5 @@
+package clinica;
+
 public interface Imprimivel {
     /**
      * Gera o conteúdo formatado para impressão.

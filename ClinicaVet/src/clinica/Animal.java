@@ -1,3 +1,5 @@
+package clinica;
+
 import java.time.LocalDate;
 
 public class Animal {

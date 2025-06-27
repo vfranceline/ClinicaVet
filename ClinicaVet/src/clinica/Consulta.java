@@ -1,4 +1,7 @@
+package clinica;
+
 import java.time.LocalDate;
+
 public class Consulta implements Faturavel {
     private Veterinario veterinario;
     private String problema;

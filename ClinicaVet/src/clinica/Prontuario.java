@@ -1,5 +1,8 @@
+package clinica;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 public class Prontuario implements Imprimivel {
     private ArrayList<Consulta> consultas;
 

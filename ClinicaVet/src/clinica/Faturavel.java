@@ -1,3 +1,5 @@
+package clinica;
+
 public interface Faturavel {
     /**
      * calc valor final do item 

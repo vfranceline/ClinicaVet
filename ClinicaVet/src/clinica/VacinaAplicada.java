@@ -1,4 +1,7 @@
+package clinica;
+
 import java.time.LocalDate;
+
 public class VacinaAplicada {
     private Vacina vacina;
     private LocalDate dataDeAplicacao; // Alterado de String para LocalDate

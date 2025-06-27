@@ -1,4 +1,7 @@
+package clinica;
+
 import java.time.LocalDate;
+
 public class Agendamento {
     private LocalDate dataConsulta;
     private String hora;

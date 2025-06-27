@@ -1,4 +1,7 @@
+package clinica;
+
 import java.util.ArrayList;
+
 public class Tutor extends Pessoa{
     protected String endereco;
     private ArrayList<Animal> animais;

@@ -1,3 +1,5 @@
+package clinica;
+
 public class Pessoa{
     protected String nome;
     protected String cpf;

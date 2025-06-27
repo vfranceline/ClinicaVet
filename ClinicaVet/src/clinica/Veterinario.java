@@ -1,3 +1,5 @@
+package clinica;
+
 import java.util.ArrayList;
 
 public class Veterinario extends Funcionario {

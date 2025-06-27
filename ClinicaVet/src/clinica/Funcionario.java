@@ -1,3 +1,5 @@
+package clinica;
+
 public class Funcionario extends Pessoa{
     protected String turnoDeTrabalho;
 

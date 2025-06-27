@@ -1,3 +1,5 @@
+package clinica;
+
 public class Vacina implements Faturavel{
     private String nome;
     private double preco;
