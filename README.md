@@ -41,15 +41,15 @@ O código-fonte está organizado da seguinte maneira para garantir clareza e man
     * Ter o JDK (Java Development Kit) instalado.
 
 2.  **Compilação:**
-    * Navegue até o diretório `src` do projeto pelo terminal.
+    * Navegue até o diretório `ClinicaVet` do projeto pelo terminal.
     * Compile todos os arquivos `.java`:
         ```bash
-        javac *.java
+        javac -d bin src/clinica/*.java src/GUI/*.java
         ```
 
 3.  **Execução:**
-    * Ainda no diretório `src`, execute a classe principal `App`:
+    * Ainda no diretório `ClinicaVet`, execute a classe principal `Menu`:
         ```bash
-        java App
+        java -cp bin GUI.Menu 
         ```
 
