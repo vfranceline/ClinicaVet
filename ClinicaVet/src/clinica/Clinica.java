@@ -43,6 +43,16 @@ public class Clinica {
         return "Tutor " + novoTutor.getNome() + " cadastrado com sucesso!";
     }
 
+    public String removerTutor(Tutor tutor){
+        for(Tutor t : tutores){
+            if(t.getCpf().equals(tutor.getCpf())){
+                tutores.remove(tutor);
+                return "Tutor removido";
+            }
+        }
+        return "ERRO: não foi possivel encontrar o tutor selecionado";
+    }
+
     public String cadastrarAnimal(Animal novoAnimal){
         if (this.tutores.contains(novoAnimal.getTutor())) {
             this.animais.add(novoAnimal);
@@ -54,12 +64,35 @@ public class Clinica {
         }
     }
 
+    public String removerAnimal(Animal animal){
+        if (animais.contains(animal)) {
+            animais.remove(animal);
+            Tutor tutor = animal.getTutor();
+            if (tutor != null) {
+                tutor.getAnimais().remove(animal);
+            }
+            return "Animal removido com sucesso!";
+        } else {
+            return "ERRO: Animal não encontrado na clínica.";
+        }
+    }
+
     public String cadastrarVeterinario(Veterinario novoVet) {
          if (buscarVeterinario(novoVet.getCpf()) != null) {
             return "Veterinário com CPF " + novoVet.getCpf() + " já está cadastrado.";
         }
         this.veterinarios.add(novoVet);
         return "Veterinário " + novoVet.getNome() + " cadastrado com sucesso!";
+    }
+
+    public String removerVeterinario(Veterinario vet){
+        for (Veterinario v : veterinarios) {
+            if (v.getCpf().equals(vet.getCpf())) {
+                veterinarios.remove(vet);
+                return "Veterinário removido com sucesso!";
+            }
+        }
+        return "ERRO: não foi possível encontrar o veterinário selecionado";
     }
 
     public Tutor buscarTutor(String cpf){
@@ -94,12 +127,12 @@ public class Clinica {
         return "Agendamento para " + agendamento.getAnimal().getNome() + " realizado!";
     }
 
-    public String cancelarAgendamento(Agendamento agendamento) {
+    public boolean cancelarAgendamento(Agendamento agendamento) {
         boolean removido = agendamentos.remove(agendamento);
         if (removido) {
-            return "Agendamento cancelado com sucesso.";
+            return true;
         } else {
-            return "Agendamento não encontrado.";
+            return false;
         }
     }
 
@@ -167,5 +200,9 @@ public class Clinica {
 
     public List<Veterinario> getVeterinarios() {
         return veterinarios;
+    }
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
     }
 }

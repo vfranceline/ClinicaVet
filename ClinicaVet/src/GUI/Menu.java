@@ -55,8 +55,14 @@ public class Menu extends JFrame {
 
         add(painelBotoes, BorderLayout.CENTER);
 
-        //TO-DO:
         //adicionando ações aos botões
+        btnCadastroTutor.addActionListener(e -> new FormTutor(this.clinica).setVisible(true));
+        btnCadastroAnimal.addActionListener(e -> new FormAnimal(this.clinica).setVisible(true));
+        btnCadastroVet.addActionListener(e -> new FormVeterinario(this.clinica).setVisible(true));
+        btnAtendimento.addActionListener(e -> new FormAtendimento(this.clinica).setVisible(true));
+        btnRelatorios.addActionListener(e -> new FormRelatorios(this.clinica).setVisible(true));
+        btnAgendamento.addActionListener(e -> new FormAgendamento(this.clinica).setVisible(true));        
+
     }
 
     public static void main(String[] args) {
