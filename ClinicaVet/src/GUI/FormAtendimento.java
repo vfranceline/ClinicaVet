@@ -99,7 +99,7 @@ public class FormAtendimento extends JFrame {
 
         campos.add(new JLabel("Preço (R$):"), gbc(gbc, 0, 4));
         txtPrecoConsulta = new JTextField();
-        campos.add(txtPrecoConsulta, gbc(gbc, 1, 4, 1));
+        campos.add(txtPrecoConsulta, gbc(gbc, 1, 4, 2));
 
         JButton btnSalvarConsulta = new JButton("Salvar Consulta e Gerar Fatura");
         btnSalvarConsulta.addActionListener(e -> salvarConsulta());
@@ -125,16 +125,16 @@ public class FormAtendimento extends JFrame {
 
         // Labels e Campos
         campos.add(new JLabel("Nome da Vacina:"), gbc(gbc, 0, 0));
-        txtNomeVacina = new JTextField();
-        campos.add(txtNomeVacina, gbc(gbc, 1, 0));
+        txtNomeVacina = new JTextField(20);
+        campos.add(txtNomeVacina, gbc(gbc, 1, 0, 5));
 
         campos.add(new JLabel("Preço (R$):"), gbc(gbc, 0, 1));
         txtPrecoVacina = new JTextField();
-        campos.add(txtPrecoVacina, gbc(gbc, 1, 1));
+        campos.add(txtPrecoVacina, gbc(gbc, 1, 1, 5));
 
         campos.add(new JLabel("Validade (dd/MM/yyyy):"), gbc(gbc, 0, 2));
         txtDataValidade = new JTextField();
-        campos.add(txtDataValidade, gbc(gbc, 1, 2));
+        campos.add(txtDataValidade, gbc(gbc, 1, 2, 5));
 
         JButton btnSalvarVacina = new JButton("Salvar Vacina e Gerar Fatura");
         btnSalvarVacina.addActionListener(e -> salvarVacina());
