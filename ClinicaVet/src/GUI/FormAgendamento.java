@@ -9,6 +9,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class FormAgendamento extends JFrame{
@@ -187,6 +188,7 @@ public class FormAgendamento extends JFrame{
 
         // Adiciona cada agendamento ao modelo da lista
         if (agendamentosAtuais != null) {
+            agendamentosAtuais.sort(Comparator.comparing(Agendamento::getDataConsulta).thenComparing(Agendamento::getHora));
             for (Agendamento ag : agendamentosAtuais) {
                 listModel.addElement(ag);
             }
