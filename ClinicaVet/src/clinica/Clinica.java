@@ -14,6 +14,7 @@ public class Clinica {
     private List<Funcionario> funcionarios;
     private List<Agendamento> agendamentos; 
     private List<String> especialidades;
+    private List<Vacina> vacinasDisponiveis;
     
     public Clinica() {
         this.animais = new ArrayList<>();
@@ -22,6 +23,13 @@ public class Clinica {
         this.funcionarios = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
         this.especialidades = new ArrayList<>(Arrays.asList("Cardiologia", "Oftalmologia", "Dermatologia", "Ortopedia", "Neurologia", "Odontologia", "Clínico Geral"));
+        this.vacinasDisponiveis = new ArrayList<>(Arrays.asList(
+            new Vacina("V10 (Múltipla)", 120.00),
+            new Vacina("Antirrábica (Raiva)", 80.00),
+            new Vacina("Gripe Canina", 95.00),
+            new Vacina("Leishmaniose (Calazar)", 150.00),
+            new Vacina("Felin-O-Vax (Quádrupla Felina)", 130.00)
+        ));
     } 
 
     public double emitirCobranca(Tutor tutor, List<Faturavel> itens) {
@@ -211,5 +219,9 @@ public class Clinica {
 
     public List<String> getEspecialidade() {
         return especialidades;
+    }
+
+    public List<Vacina> getVacinasDisponiveis() {
+        return vacinasDisponiveis;
     }
 }

@@ -26,7 +26,8 @@ public class FormAtendimento extends JFrame {
     private JTextField txtMedicamento;
 
     // --- Componentes da Aba de Vacina ---
-    private JTextField txtNomeVacina, txtPrecoVacina, txtDataValidade;
+    private JComboBox<Vacina> comboVacinas;
+    private JTextField txtDataValidade;
 
     
     public FormAtendimento(Clinica clinica) {
@@ -120,13 +121,9 @@ public class FormAtendimento extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Labels e Campos
-        campos.add(new JLabel("Nome da Vacina:"), gbc(gbc, 0, 0));
-        txtNomeVacina = new JTextField(20);
-        campos.add(txtNomeVacina, gbc(gbc, 1, 0, 5));
-
-        campos.add(new JLabel("Preço (R$):"), gbc(gbc, 0, 1));
-        txtPrecoVacina = new JTextField();
-        campos.add(txtPrecoVacina, gbc(gbc, 1, 1, 5));
+        campos.add(new JLabel("Selecione a Vacina:"), gbc(gbc, 0, 0));
+        comboVacinas = new JComboBox<>(clinica.getVacinasDisponiveis().toArray(new Vacina[0]));
+        campos.add(comboVacinas, gbc(gbc, 1, 0, 5));
 
         campos.add(new JLabel("Validade (dd/MM/yyyy):"), gbc(gbc, 0, 2));
         txtDataValidade = new JTextField();
@@ -186,29 +183,31 @@ public class FormAtendimento extends JFrame {
         }
 
         try {
-            String nomeVacina = txtNomeVacina.getText();
-            double preco = Double.parseDouble(txtPrecoVacina.getText());
+            Vacina vacinaSelecionada = (Vacina) comboVacinas.getSelectedItem();
             LocalDate dataValidade = LocalDate.parse(txtDataValidade.getText(), dateFormatter);
 
-            Vacina novaVacina = new Vacina(nomeVacina, preco); //
-            clinica.aplicarVacina(animalSelecionado, novaVacina, LocalDate.now(), dataValidade); //
+            if (vacinaSelecionada == null){
+                JOptionPane.showMessageDialog(this, "Selecione uma vacina.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            clinica.aplicarVacina(animalSelecionado, vacinaSelecionada, LocalDate.now(), dataValidade); //
 
             // Gera a cobrança
             List<Faturavel> itens = new ArrayList<>(); //
-            itens.add(novaVacina);
+            itens.add(vacinaSelecionada);
             double total = clinica.emitirCobranca(animalSelecionado.getTutor(), itens); //
 
             JOptionPane.showMessageDialog(this,
-                    String.format("Vacina '%s' aplicada em '%s' com sucesso!\nValor a ser pago: R$ %.2f", nomeVacina, animalSelecionado.getNome(), total),
+                    String.format("Vacina '%s' aplicada em '%s' com sucesso!\nValor a ser pago: R$ %.2f", vacinaSelecionada.getNome(), animalSelecionado.getNome(), total),
                     "Atendimento Registrado", JOptionPane.INFORMATION_MESSAGE);
 
             limparCamposVacina();
 
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "O preço da vacina deve ser um número válido.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(this, "Formato de data de validade inválido. Use dd/MM/yyyy.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
-        }
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } 
     }
 
     // --- MÉTODOS AUXILIARES ---
@@ -270,8 +269,6 @@ public class FormAtendimento extends JFrame {
     }
 
     private void limparCamposVacina() {
-        txtNomeVacina.setText("");
-        txtPrecoVacina.setText("");
         txtDataValidade.setText("");
     }
 }

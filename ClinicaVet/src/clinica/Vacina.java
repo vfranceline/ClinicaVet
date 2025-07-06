@@ -29,4 +29,12 @@ public class Vacina implements Faturavel{
     public double calcularValor() { //implementa interface de faturavel
         return this.preco; // O valor da vacina é o seu preço tabelado
     }
+
+    /**
+     * Retorna o nome da vacina para ser exibido em componentes de UI como JComboBox.
+     */
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }
