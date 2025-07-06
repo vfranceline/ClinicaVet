@@ -16,7 +16,7 @@ public class FormAgendamento extends JFrame{
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private JComboBox<Animal> comboAnimais;
-    private JTextField txtEspecialidade;
+    private JComboBox<String> comboEspecialidade;
     private JComboBox<String> comboHorarios;
     private JTextField txtData;
     private JList<Agendamento> listaAgendamentos;
@@ -48,8 +48,8 @@ public class FormAgendamento extends JFrame{
         painelCampos.add(comboAnimais, gbc(gbc, 1, 0));
 
         painelCampos.add(new JLabel("Especialidade:"), gbc(gbc, 0, 1));
-        txtEspecialidade = new JTextField();
-        painelCampos.add(txtEspecialidade, gbc(gbc, 1, 1));
+        comboEspecialidade = new JComboBox<>(clinica.getEspecialidade().toArray(new String[0]));
+        painelCampos.add(comboEspecialidade, gbc(gbc, 1, 1));
 
         painelCampos.add(new JLabel("Data (dd/MM/yyyy):"), gbc(gbc, 0, 2));
         txtData = new JTextField(LocalDate.now().format(dateFormatter));
@@ -97,10 +97,10 @@ public class FormAgendamento extends JFrame{
      */
     private void realizarAgendamento() {
         Animal animal = (Animal) comboAnimais.getSelectedItem();
-        String especialidade = txtEspecialidade.getText().trim();
+        String especialidade = (String) comboEspecialidade.getSelectedItem();
         String horario = (String) comboHorarios.getSelectedItem();
 
-        if (animal == null || especialidade.isEmpty()) {
+        if (animal == null || especialidade == null) {
             JOptionPane.showMessageDialog(this, "Selecione um animal e informe a especialidade.", "Dados Incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }

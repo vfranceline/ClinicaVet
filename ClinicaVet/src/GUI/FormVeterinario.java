@@ -18,7 +18,8 @@ public class FormVeterinario extends JFrame {
     private final Clinica clinica;
 
     // Componentes da Interface
-    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtEspecialidade, txtCfmv, txtTurno;
+    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtCfmv, txtTurno;
+    private JComboBox<String> comboEspecialidade;
     private JList<Veterinario> listaVeterinarios;
     private DefaultListModel<Veterinario> listModel;
     private JButton btnSalvar, btnEditar, btnExcluir;
@@ -69,8 +70,8 @@ public class FormVeterinario extends JFrame {
         painelCampos.add(txtEmail, gbc(gbc, 1, 2));
         txtTelefone = new JTextField();
         painelCampos.add(txtTelefone, gbc(gbc, 1, 3));
-        txtEspecialidade = new JTextField();
-        painelCampos.add(txtEspecialidade, gbc(gbc, 1, 4));
+        comboEspecialidade = new JComboBox<>(clinica.getEspecialidade().toArray(new String[0]));
+        painelCampos.add(comboEspecialidade, gbc(gbc, 1, 4));
         txtCfmv = new JTextField();
         painelCampos.add(txtCfmv, gbc(gbc, 1, 5));
         txtTurno = new JTextField();
@@ -157,8 +158,9 @@ public class FormVeterinario extends JFrame {
         String nome = txtNome.getText().trim();
         String cpf = txtCpf.getText().trim();
         String cfmv = txtCfmv.getText().trim();
+        String especialidade = (String) comboEspecialidade.getSelectedItem();
 
-        if (nome.isEmpty() || cpf.isEmpty() || cfmv.isEmpty()) {
+        if (nome.isEmpty() || cpf.isEmpty() || cfmv.isEmpty() || especialidade == null) {
             JOptionPane.showMessageDialog(this, "Nome, CPF e CFMV são obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -168,14 +170,14 @@ public class FormVeterinario extends JFrame {
                 JOptionPane.showMessageDialog(this, "Já existe um veterinário com este CPF.", "CPF Duplicado", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Veterinario novoVet = new Veterinario(nome, cpf, txtEmail.getText(), txtTelefone.getText(), txtEspecialidade.getText(), cfmv, txtTurno.getText());
+            Veterinario novoVet = new Veterinario(nome, cpf, txtEmail.getText(), txtTelefone.getText(), especialidade, cfmv, txtTurno.getText());
             clinica.cadastrarVeterinario(novoVet);
             JOptionPane.showMessageDialog(this, "Veterinário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } else { // Atualizar existente
             vetSelecionado.setNome(nome);
             vetSelecionado.setEmail(txtEmail.getText());
             vetSelecionado.setTelefone(txtTelefone.getText());
-            vetSelecionado.setEspecialidade(txtEspecialidade.getText());
+            vetSelecionado.setEspecialidade(especialidade);
             vetSelecionado.setCfmv(cfmv);
             vetSelecionado.setTurnoDeTrabalho(txtTurno.getText());
             JOptionPane.showMessageDialog(this, "Dados do veterinário atualizados!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -225,7 +227,7 @@ public class FormVeterinario extends JFrame {
         txtCpf.setText(vet.getCpf());
         txtEmail.setText(vet.getEmail());
         txtTelefone.setText(vet.getTelefone());
-        txtEspecialidade.setText(vet.getEspecialidade());
+        comboEspecialidade.setSelectedItem(vet.getEspecialidade());
         txtCfmv.setText(vet.getCfmv());
         txtTurno.setText(vet.getTurnoDeTrabalho());
     }
@@ -238,7 +240,7 @@ public class FormVeterinario extends JFrame {
         txtCpf.setText("");
         txtEmail.setText("");
         txtTelefone.setText("");
-        txtEspecialidade.setText("");
+        comboEspecialidade.setSelectedIndex(-1);
         txtCfmv.setText("");
         txtTurno.setText("");
         listaVeterinarios.clearSelection();

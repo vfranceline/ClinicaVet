@@ -3,6 +3,7 @@ package clinica;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Clinica {
@@ -12,6 +13,7 @@ public class Clinica {
     private List<Veterinario> veterinarios;
     private List<Funcionario> funcionarios;
     private List<Agendamento> agendamentos; 
+    private List<String> especialidades;
     
     public Clinica() {
         this.animais = new ArrayList<>();
@@ -19,6 +21,7 @@ public class Clinica {
         this.veterinarios = new ArrayList<>();
         this.funcionarios = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
+        this.especialidades = new ArrayList<>(Arrays.asList("Cardiologia", "Oftalmologia", "Dermatologia", "Ortopedia", "Neurologia", "Odontologia", "Clínico Geral"));
     } 
 
     public double emitirCobranca(Tutor tutor, List<Faturavel> itens) {
@@ -204,5 +207,9 @@ public class Clinica {
 
     public List<Agendamento> getAgendamentos() {
         return agendamentos;
+    }
+
+    public List<String> getEspecialidade() {
+        return especialidades;
     }
 }
