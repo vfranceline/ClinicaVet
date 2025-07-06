@@ -32,7 +32,7 @@ O código-fonte está organizado da seguinte maneira para garantir clareza e man
 
 
 - **`/src`**: Contém os arquivos de código-fonte (`.java`) com a implementação da lógica da Clínica Veterinária.
-- **`/build`**: Pasta de destino para os arquivos executáveis gerados após a compilação.
+- **`/bin`**: Pasta de destino para os arquivos executáveis gerados após a compilação.
 
 
 ## Como Executar
