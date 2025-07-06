@@ -51,7 +51,7 @@ public class App {
         System.out.println("--- Realizando Atendimento para 'Bunny' ---");
         LocalDate dataConsulta = LocalDate.of(2025, 6, 19);
         Consulta consultaBunny = new Consulta(vetKyungsoo, "Tosse depois de latir muito no show", "Excesso de fofura", 
-                                                "Dar mais petiscos e carinho", dataConsulta, 250.00);
+                                                "Dar mais petiscos e carinho", dataConsulta);
         clinica.realizarConsulta(petBunny, consultaBunny); // Necessita de um método realizarConsulta melhor elaborado na classe Clínica!!!
         System.out.println();
 

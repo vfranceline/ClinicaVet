@@ -23,7 +23,7 @@ public class FormAtendimento extends JFrame {
     // --- Componentes da Aba de Consulta ---
     private JComboBox<Veterinario> comboVeterinarios;
     private JTextArea txtProblema, txtDiagnostico;
-    private JTextField txtMedicamento, txtPrecoConsulta;
+    private JTextField txtMedicamento;
 
     // --- Componentes da Aba de Vacina ---
     private JTextField txtNomeVacina, txtPrecoVacina, txtDataValidade;
@@ -97,10 +97,6 @@ public class FormAtendimento extends JFrame {
         txtMedicamento = new JTextField();
         campos.add(txtMedicamento, gbc(gbc, 1, 3, 2));
 
-        campos.add(new JLabel("Preço (R$):"), gbc(gbc, 0, 4));
-        txtPrecoConsulta = new JTextField();
-        campos.add(txtPrecoConsulta, gbc(gbc, 1, 4, 2));
-
         JButton btnSalvarConsulta = new JButton("Salvar Consulta e Gerar Fatura");
         btnSalvarConsulta.addActionListener(e -> salvarConsulta());
 
@@ -158,9 +154,8 @@ public class FormAtendimento extends JFrame {
             Veterinario vet = (Veterinario) comboVeterinarios.getSelectedItem();
             String problema = txtProblema.getText();
             String diagnostico = txtDiagnostico.getText();
-            double preco = Double.parseDouble(txtPrecoConsulta.getText());
 
-            Consulta novaConsulta = new Consulta(vet, problema, diagnostico, txtMedicamento.getText(), LocalDate.now(), preco); //
+            Consulta novaConsulta = new Consulta(vet, problema, diagnostico, txtMedicamento.getText(), LocalDate.now()); //
             animalSelecionado.adicionarConsulta(novaConsulta); //
 
             // Gera a cobrança
@@ -271,7 +266,6 @@ public class FormAtendimento extends JFrame {
         txtProblema.setText("");
         txtDiagnostico.setText("");
         txtMedicamento.setText("");
-        txtPrecoConsulta.setText("");
         if (comboVeterinarios.getItemCount() > 0) comboVeterinarios.setSelectedIndex(0);
     }
 

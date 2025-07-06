@@ -14,6 +14,27 @@ public class Veterinario extends Funcionario {
         this.consultas = new ArrayList<>();
     }
 
+    /**
+     * Retorna o valor da consulta com base na especialidade do veterinário.
+     * @return O valor da consulta em double.
+     */
+    public double getPrecoPorEspecialidade() {
+        switch (this.especialidade) {
+            case "Cardiologia":
+            case "Neurologia":
+            case "Ortopedia":
+                return 350.00;
+            case "Oftalmologia":
+            case "Dermatologia":
+                return 300.00;
+            case "Odontologia":
+                return 280.00;
+            case "Clínico Geral":
+            default:
+                return 250.00;
+        }
+    }
+
     public String getEspecialidade() {
         return especialidade;
     }

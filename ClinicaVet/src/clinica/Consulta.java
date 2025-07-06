@@ -11,13 +11,13 @@ public class Consulta implements Faturavel {
     private double preco;
 
     public Consulta(Veterinario veterinario, String problema, String diagnostico,
-                    String medicamento, LocalDate dataConsulta, double preco) { // Construtor atualizado
+                    String medicamento, LocalDate dataConsulta) { // Construtor atualizado
         this.veterinario = veterinario;
         this.problema = problema;
         this.diagnostico = diagnostico;
         this.medicamento = medicamento;
         this.dataConsulta = dataConsulta;
-        this.preco = preco;
+        this.preco = veterinario.getPrecoPorEspecialidade();
     }
     
     // Getters e Setters atualizados
