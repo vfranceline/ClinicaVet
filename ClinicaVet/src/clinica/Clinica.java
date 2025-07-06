@@ -106,6 +106,30 @@ public class Clinica {
         return "ERRO: não foi possível encontrar o veterinário selecionado";
     }
 
+    public String cadastrarFuncionario(Funcionario novoFunc) {
+        if (buscarFuncionario(novoFunc.getCpf()) != null || buscarVeterinario(novoFunc.getCpf()) != null) {
+           return "Funcionário com CPF " + novoFunc.getCpf() + " já está cadastrado.";
+       }
+       this.funcionarios.add(novoFunc);
+       return "Funcionário " + novoFunc.getNome() + " cadastrado com sucesso!";
+    }
+
+    public String removerFuncionario(Funcionario func) {
+        if (funcionarios.remove(func)) {
+            return "Funcionário removido com sucesso!";
+        }
+        return "ERRO: não foi possível encontrar o funcionário selecionado";
+    }
+
+    public Funcionario buscarFuncionario(String cpf) {
+        for (Funcionario func : funcionarios) {
+            if (func.getCpf().equals(cpf)) {
+                return func;
+            }
+        }
+        return null;
+    }
+
     public Tutor buscarTutor(String cpf){
         for(Tutor tutor : tutores){
             if(tutor.getCpf().equals(cpf)){
@@ -223,5 +247,9 @@ public class Clinica {
 
     public List<Vacina> getVacinasDisponiveis() {
         return vacinasDisponiveis;
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
     }
 }

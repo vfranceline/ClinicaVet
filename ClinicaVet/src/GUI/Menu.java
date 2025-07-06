@@ -44,14 +44,14 @@ public class Menu extends JFrame {
         //criando botões e adicionando ao painel
         JButton btnCadastroTutor = criarButton("Gerenciar Tutores");
         JButton btnCadastroAnimal = criarButton("Gerenciar Animais");
-        JButton btnCadastroVet = criarButton("Gerenciar Veterinários");
+        JButton btnGerenciarFuncionarios = criarButton("Gerenciar Funcionarios");
         JButton btnAtendimento = criarButton("Atendimentos");
         JButton btnRelatorios = criarButton("Relatórios");
         JButton btnAgendamento = criarButton("Agendamentos");
 
         painelBotoes.add(btnCadastroTutor);
         painelBotoes.add(btnCadastroAnimal);
-        painelBotoes.add(btnCadastroVet);
+        painelBotoes.add(btnGerenciarFuncionarios);
         painelBotoes.add(btnAtendimento);
         painelBotoes.add(btnRelatorios);
         painelBotoes.add(btnAgendamento);
@@ -61,7 +61,7 @@ public class Menu extends JFrame {
         //adicionando ações aos botões
         btnCadastroTutor.addActionListener(e -> new FormTutor(this.clinica).setVisible(true));
         btnCadastroAnimal.addActionListener(e -> new FormAnimal(this.clinica).setVisible(true));
-        btnCadastroVet.addActionListener(e -> new FormVeterinario(this.clinica).setVisible(true));
+        btnGerenciarFuncionarios.addActionListener(e -> new FormTipoFuncionario(this.clinica).setVisible(true));
         btnAtendimento.addActionListener(e -> new FormAtendimento(this.clinica).setVisible(true));
         btnRelatorios.addActionListener(e -> new FormRelatorios(this.clinica).setVisible(true));
         btnAgendamento.addActionListener(e -> new FormAgendamento(this.clinica).setVisible(true));        
