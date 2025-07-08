@@ -94,12 +94,12 @@ public class FormFuncionario extends JFrame {
         listModel = new DefaultListModel<>();
         listaFuncionarios = new JList<>(listModel);
         listaFuncionarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
         personalizarListaFuncionarios();
 
         JScrollPane scrollPane = new JScrollPane(listaFuncionarios);
+        painelLista.add(scrollPane, BorderLayout.CENTER);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, scrollPane);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, painelLista);
         splitPane.setDividerLocation(400);
         add(splitPane, BorderLayout.CENTER);
 

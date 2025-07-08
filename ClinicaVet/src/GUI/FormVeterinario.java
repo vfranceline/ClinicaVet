@@ -5,6 +5,8 @@ import clinica.Veterinario;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Formulário para o gerenciamento completo de veterinários (inclusão, alteração, exclusão e consulta).
@@ -18,7 +20,7 @@ public class FormVeterinario extends JFrame {
     private final Clinica clinica;
 
     // Componentes da Interface
-    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtCfmv, txtTurno;
+    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtCfmv, txtTurno, txtBuscarVeterinario;
     private JComboBox<String> comboEspecialidade;
     private JList<Veterinario> listaVeterinarios;
     private DefaultListModel<Veterinario> listModel;
@@ -93,9 +95,26 @@ public class FormVeterinario extends JFrame {
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
+        JPanel painelLista = new JPanel(new BorderLayout(5, 5));
+        painelLista.setBorder(BorderFactory.createTitledBorder("Veterinários Cadastrados"));
+
+        JPanel painelBusca = new JPanel(new BorderLayout());
+        painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
+        txtBuscarVeterinario = new JTextField();
+        painelBusca.add(txtBuscarVeterinario, BorderLayout.CENTER);
+        painelLista.add(painelBusca, BorderLayout.NORTH);
+
         listModel = new DefaultListModel<>();
         listaVeterinarios = new JList<>(listModel);
         listaVeterinarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollPane = new JScrollPane(listaVeterinarios);
+        painelLista.add(scrollPane, BorderLayout.CENTER);
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, painelLista);
+        splitPane.setDividerLocation(450);
+        add(splitPane, BorderLayout.CENTER);
+
 
         // Renderizador para exibir informações relevantes na lista
         listaVeterinarios.setCellRenderer(new DefaultListCellRenderer() {
@@ -110,18 +129,17 @@ public class FormVeterinario extends JFrame {
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(listaVeterinarios);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Veterinários Cadastrados"));
-
-        // Adiciona os painéis principais à janela
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, scrollPane);
-        splitPane.setDividerLocation(450);
-        add(splitPane, BorderLayout.CENTER);
-
         // --- AÇÕES E EVENTOS ---
         btnSalvar.addActionListener(e -> salvarVeterinario());
         btnEditar.addActionListener(e -> salvarVeterinario()); // Reutiliza a lógica de salvar
         btnExcluir.addActionListener(e -> excluirVeterinario());
+
+        txtBuscarVeterinario.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filtrarVeterinarios();
+            }
+        });
 
         listaVeterinarios.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -246,5 +264,18 @@ public class FormVeterinario extends JFrame {
         listaVeterinarios.clearSelection();
         vetSelecionado = null;
         txtCpf.setEditable(true);
+    }
+
+    /**
+     * Filtra a lista de veterinários com base no texto digitado no campo de busca.
+     */
+    private void filtrarVeterinarios() {
+        String filtro = txtBuscarVeterinario.getText().toLowerCase();
+        listModel.clear();
+        for (Veterinario vet : clinica.getVeterinarios()) {
+            if (vet.getNome().toLowerCase().contains(filtro)) {
+                listModel.addElement(vet);
+            }    
+        }
     }
 }
