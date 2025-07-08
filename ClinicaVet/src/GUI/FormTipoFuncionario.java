@@ -17,7 +17,7 @@ public class FormTipoFuncionario extends JFrame {
         this.clinica = clinica;
 
         setTitle("Seleção de Tipo de Funcionário");
-        setSize(400, 200);
+        setSize(600, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
