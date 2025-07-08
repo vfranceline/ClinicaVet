@@ -44,7 +44,7 @@ O código-fonte está organizado da seguinte maneira para garantir clareza e man
     * Navegue até o diretório `ClinicaVet` do projeto pelo terminal.
     * Compile todos os arquivos `.java`:
         ```bash
-        javac -d bin src/clinica/*.java src/GUI/*.java
+        javac -d bin ClinicaVet/src/clinica/*.java src/GUI/*.java
         ```
 
 3.  **Execução:**
