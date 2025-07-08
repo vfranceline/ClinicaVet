@@ -2,9 +2,12 @@ package GUI;
 
 import clinica.Clinica;
 import clinica.Funcionario;
+import clinica.Tutor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Formulário para o gerenciamento de funcionários gerais (não veterinários).
@@ -16,7 +19,7 @@ public class FormFuncionario extends JFrame {
     private final Clinica clinica;
 
     // Componentes da Interface
-    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtTurno;
+    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtTurno, txtBuscarFuncionario;
     private JList<Funcionario> listaFuncionarios;
     private DefaultListModel<Funcionario> listModel;
     private JButton btnSalvar, btnEditar, btnExcluir;
@@ -79,13 +82,22 @@ public class FormFuncionario extends JFrame {
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
+        JPanel painelLista = new JPanel(new BorderLayout(5, 5));
+        painelLista.setBorder(BorderFactory.createTitledBorder("Funcionários Cadastrados"));
+
+        JPanel painelBusca = new JPanel(new BorderLayout());
+        painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
+        txtBuscarFuncionario = new JTextField();
+        painelBusca.add(txtBuscarFuncionario, BorderLayout.CENTER);
+        painelLista.add(painelBusca, BorderLayout.NORTH);
+
         listModel = new DefaultListModel<>();
         listaFuncionarios = new JList<>(listModel);
         listaFuncionarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         personalizarListaFuncionarios();
 
         JScrollPane scrollPane = new JScrollPane(listaFuncionarios);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Funcionários Cadastrados"));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, scrollPane);
         splitPane.setDividerLocation(400);
@@ -96,6 +108,13 @@ public class FormFuncionario extends JFrame {
         btnSalvar.addActionListener(e -> salvarFuncionario());
         btnEditar.addActionListener(e -> salvarFuncionario()); // Reutiliza a lógica de salvar
         btnExcluir.addActionListener(e -> excluirFuncionario());
+
+        txtBuscarFuncionario.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filtrarFuncionarios();
+            }
+        });
 
         listaFuncionarios.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -205,5 +224,18 @@ public class FormFuncionario extends JFrame {
                 return this;
             }
         });
+    }
+
+    /**
+     * Filtra a lista de tutores com base no texto digitado no campo de busca.
+     */
+    private void filtrarFuncionarios() {
+        String termoBusca = txtBuscarFuncionario.getText().toLowerCase();
+        listModel.clear();
+        for (Funcionario funcionario : clinica.getFuncionarios()) {
+            if (funcionario.getNome().toLowerCase().contains(termoBusca)) {
+                listModel.addElement(funcionario);
+            }
+        }
     }
 }

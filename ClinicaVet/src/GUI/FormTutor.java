@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import clinica.Clinica;
 import clinica.Tutor;
@@ -11,7 +13,7 @@ public class FormTutor extends JFrame {
     private final Clinica clinica;
 
     // Componentes da Interface
-    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtEndereco;
+    private JTextField txtNome, txtCpf, txtEmail, txtTelefone, txtEndereco, txtBuscarTutor;
     private JList<Tutor> listaTutores;
     private DefaultListModel<Tutor> listModel;
     private JButton btnSalvar, btnEditar, btnExcluir;
@@ -75,8 +77,14 @@ public class FormTutor extends JFrame {
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
-        JPanel painelLista = new JPanel(new BorderLayout());
+        JPanel painelLista = new JPanel(new BorderLayout(5, 5));
         painelLista.setBorder(BorderFactory.createTitledBorder("Tutores Cadastrados"));
+
+        JPanel painelBusca = new JPanel(new BorderLayout());
+        painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
+        txtBuscarTutor = new JTextField();
+        painelBusca.add(txtBuscarTutor, BorderLayout.CENTER);
+        painelLista.add(painelBusca, BorderLayout.NORTH);
 
         listModel = new DefaultListModel<>();
         listaTutores = new JList<>(listModel);
@@ -105,6 +113,13 @@ public class FormTutor extends JFrame {
         btnSalvar.addActionListener(e -> salvarTutor());
         btnEditar.addActionListener(e -> editarTutor());
         btnExcluir.addActionListener(e -> excluirTutor());
+
+        txtBuscarTutor.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filtrarTutores();
+            }
+        });
 
         // Listener para a seleção na lista
         listaTutores.addListSelectionListener(e -> {
@@ -234,5 +249,18 @@ public class FormTutor extends JFrame {
         listaTutores.clearSelection();
         tutorSelecionado = null;
         txtCpf.setEditable(true); // Libera o CPF para novo cadastro
+    }
+
+    /**
+     * Filtra a lista de tutores com base no texto digitado no campo de busca.
+     */
+    private void filtrarTutores() {
+        String termoBusca = txtBuscarTutor.getText().toLowerCase();
+        listModel.clear();
+        for (Tutor tutor : clinica.getTutores()) {
+            if (tutor.getNome().toLowerCase().contains(termoBusca)) {
+                listModel.addElement(tutor);
+            }
+        }
     }
 }

@@ -96,22 +96,32 @@ public class Menu extends JFrame {
     }
 
     private void preparaDadosIniciais() {
-        // Cadastro de Tutores
-        Tutor tutorSuho = new Tutor("Kim Junmyeon (Suho)", "001.001.001-01", "suho.kim@weareone.com", "(11) 91111-1111", "Avenida EXO, 1");
-        clinica.cadastrarTutor(tutorSuho);
+    // Cadastro de Tutores
+    Tutor tutorJoao = new Tutor("João Silva", "123.456.789-00", "joao.silva@email.com", "(11) 91234-5678", "Rua das Flores, 123");
+    clinica.cadastrarTutor(tutorJoao);
 
-        Tutor tutorBaekhyun = new Tutor("Byun Baekhyun", "004.004.004-04", "baekhyun.byun@weareone.com", "(11) 94444-4444", "Rua K-BBING, 4");
-        clinica.cadastrarTutor(tutorBaekhyun);
+    Tutor tutorMaria = new Tutor("Maria Oliveira", "987.654.321-00", "maria.oliveira@email.com", "(11) 99876-5432", "Avenida Central, 456");
+    clinica.cadastrarTutor(tutorMaria);
 
-        // Cadastro de Veterinário
-        Veterinario vetKyungsoo = new Veterinario("Do Kyungsoo (D.O.)", "012.012.012-12", "kyungsoo.do@vet.com", "(11) 91212-1212", "Cardiologia e Oftalmologia", "CRMV-SP 121212", "Integral");
-        clinica.cadastrarVeterinario(vetKyungsoo);
+    // Cadastro de Veterinários
+    Veterinario vetCarlos = new Veterinario("Carlos Pereira", "111.222.333-44", "carlos.pereira@vet.com", "(11) 91122-3344", "Clínica Geral", "CRMV-SP 556677", "Integral");
+    clinica.cadastrarVeterinario(vetCarlos);
 
-        // Cadastro de Animais
-        Animal petBunny = new Animal("Bunny", "Bichon Frise", tutorSuho, LocalDate.of(2021, 5, 22));
-        clinica.cadastrarAnimal(petBunny);
+    Veterinario vetFernanda = new Veterinario("Fernanda Costa", "222.333.444-55", "fernanda.costa@vet.com", "(11) 92233-4455", "Dermatologia", "CRMV-SP 112233", "Parcial");
+    clinica.cadastrarVeterinario(vetFernanda);
 
-        Animal petMongryong = new Animal("Mongryong", "Welsh Corgi", tutorBaekhyun, LocalDate.of(2015, 5, 6));
-        clinica.cadastrarAnimal(petMongryong);
-    }
+    Veterinario vetRoberto = new Veterinario("Roberto Lima", "333.444.555-66", "roberto.lima@vet.com", "(11) 93344-5566", "Ortopedia", "CRMV-SP 334455", "Plantão");
+    clinica.cadastrarVeterinario(vetRoberto);
+
+    Veterinario vetAline = new Veterinario("Aline Martins", "444.555.666-77", "aline.martins@vet.com", "(11) 94455-6677", "Neurologia e Comportamento", "CRMV-SP 778899", "Integral");
+    clinica.cadastrarVeterinario(vetAline);
+
+    // Cadastro de Animais
+    Animal petLuna = new Animal("Luna", "Poodle", tutorJoao, LocalDate.of(2020, 3, 15));
+    clinica.cadastrarAnimal(petLuna);
+
+    Animal petThor = new Animal("Thor", "Labrador", tutorMaria, LocalDate.of(2018, 7, 10));
+    clinica.cadastrarAnimal(petThor);
+}
+
 }
