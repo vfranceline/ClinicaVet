@@ -6,6 +6,8 @@ import clinica.Tutor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -21,7 +23,7 @@ public class FormAnimal extends JFrame {
 
     // Componentes da Interface
     private JComboBox<Tutor> comboTutores;
-    private JTextField txtNome, txtRaca, txtDataNascimento;
+    private JTextField txtNome, txtRaca, txtDataNascimento, txtBuscarAnimal;
     private JList<Animal> listaAnimais;
     private DefaultListModel<Animal> listModel;
     private JButton btnSalvar, btnExcluir;
@@ -79,13 +81,22 @@ public class FormAnimal extends JFrame {
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
+        JPanel painelLista = new JPanel(new BorderLayout(5, 5));
+        painelLista.setBorder(BorderFactory.createTitledBorder("Animais Cadastrados"));
+
+        JPanel painelBusca = new JPanel(new BorderLayout());
+        painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
+        txtBuscarAnimal = new JTextField();
+        painelBusca.add(txtBuscarAnimal, BorderLayout.CENTER);
+        painelLista.add(painelBusca, BorderLayout.NORTH);
+
         listModel = new DefaultListModel<>();
         listaAnimais = new JList<>(listModel);
         personalizarListaAnimais();
         JScrollPane scrollPane = new JScrollPane(listaAnimais);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Animais Cadastrados"));
+        painelLista.add(scrollPane, BorderLayout.CENTER);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, scrollPane);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, painelLista);
         splitPane.setDividerLocation(400);
         add(splitPane, BorderLayout.CENTER);
 
@@ -95,6 +106,13 @@ public class FormAnimal extends JFrame {
 
         btnSalvar.addActionListener(e -> salvarAnimal());
         btnExcluir.addActionListener(e -> excluirAnimal());
+
+        txtBuscarAnimal.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filtrarAnimais();
+            }
+        });
 
         listaAnimais.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -245,4 +263,18 @@ public class FormAnimal extends JFrame {
             }
         });
     }
+
+    /**
+     * Filtra a lista de animais com base no texto digitado no campo de busca.
+     */
+    private void filtrarAnimais() {
+        String termoBusca = txtBuscarAnimal.getText().toLowerCase();
+        listModel.clear();
+        for (Animal animal : clinica.getAnimais()) {
+            if (animal.getNome().toLowerCase().contains(termoBusca)) {
+                listModel.addElement(animal);
+            }
+        }
+    }
+
 }
