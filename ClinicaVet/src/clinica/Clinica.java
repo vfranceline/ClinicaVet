@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Comparator;
+
 
 public class Clinica {
 
@@ -222,6 +224,26 @@ public class Clinica {
             System.out.println("Nenhuma vacina encontrada com vencimento para esta data.");
         }
         System.out.println("--------------------------------------------------");
+    }
+
+    /**
+     * Consulta e retorna uma lista de todas as vacinas aplicadas que vencerão no mês atual.
+     * @return Uma lista de objetos VacinaAplicada com o animal associado.
+     */
+    public List<VacinaAplicada> consultarVacinasVencendoMesAtual() {
+        int mesAtual = LocalDate.now().getMonthValue();
+        List<VacinaAplicada> vacinasAVencer = new ArrayList<>();
+
+        for (Animal animal : this.animais) {
+            for (VacinaAplicada vacinaApp : animal.getCartaoVacina().getVacinasAplicadas()) {
+                if (vacinaApp.getDataDeValidade().getMonthValue() == mesAtual) {
+                    vacinasAVencer.add(vacinaApp);
+                }
+            }
+        }
+        // Ordena a lista por data de validade para melhor visualização
+        vacinasAVencer.sort(Comparator.comparing(VacinaAplicada::getDataDeValidade));
+        return vacinasAVencer;
     }
 
     //gets
