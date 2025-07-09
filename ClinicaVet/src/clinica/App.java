@@ -47,7 +47,7 @@ public class App {
         clinica.agendar(agendamentoOftalmo);
 
         // Agendamento 3: Cardiologia no mesmo horário (Será bloqueado)
-        Agendamento agendamentoCardioRepetido = new Agendamento(dataAgendamento, "14:00", "Cardiologia", petBunny);
+        Agendamento agendamentoCardioRepetido = new Agendamento(dataAgendamento, "14:00", "Oftalmologia", petMongryong);
         clinica.agendar(agendamentoCardioRepetido);
 
         // Cancelando a consulta

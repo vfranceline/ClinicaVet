@@ -3,14 +3,13 @@ package GUI;
 import clinica.Agendamento;
 import clinica.Animal;
 import clinica.Clinica;
-
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javax.swing.*;
 
 public class FormAgendamento extends JFrame{
     private final Clinica clinica;
@@ -107,26 +106,21 @@ public class FormAgendamento extends JFrame{
         }
 
         try {
-            LocalDate data = LocalDate.parse(txtData.getText(), dateFormatter);
-            Agendamento novoAgendamento = new Agendamento(data, horario, especialidade, animal);
+                LocalDate data = LocalDate.parse(txtData.getText(), dateFormatter);
+                Agendamento novoAgendamento = new Agendamento(data, horario, especialidade, animal);
 
-            // Verifica se já existe algum agendamento para o mesmo horário
-            for (Agendamento ag : clinica.getAgendamentos()) {
-                if (ag.getDataConsulta().equals(data) && ag.getHora().equals(horario)) {
-                    JOptionPane.showMessageDialog(this, "Já existe um agendamento para este horário.", "Horário Ocupado", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+                String resultado = clinica.agendar(novoAgendamento); // Chama o método centralizado
+
+                if (resultado.startsWith("ERRO")) {
+                    JOptionPane.showMessageDialog(this, resultado, "Erro no Agendamento", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, resultado, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    atualizarListaAgendamentos();
+                }   
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Data em formato inválido. Use dd/MM/yyyy.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
             }
-
-            clinica.agendar(novoAgendamento);
-
-            JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-            atualizarListaAgendamentos();
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Data em formato inválido. Use dd/MM/yyyy.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     /**
