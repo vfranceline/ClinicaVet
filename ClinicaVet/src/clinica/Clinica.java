@@ -164,21 +164,18 @@ public class Clinica {
      * para a mesma data, hora e especialidade.
      * @param novoAgendamento O agendamento a ser criado.
      */
-    public void agendar(Agendamento novoAgendamento) {
-        for(Agendamento agendamentoExiste : this.agendamentos){
-            //Verifica se data, hora e especialidade sãos iguais
-            if(agendamentoExiste.getDataConsulta().equals(novoAgendamento.getDataConsulta()) && 
-            agendamentoExiste.getHora().equals(novoAgendamento.getHora()) &&
-            agendamentoExiste.getEspecialidade().equalsIgnoreCase(novoAgendamento.getEspecialidade())){
+    public String agendar(Agendamento novoAgendamento) {
+        for (Agendamento agendamentoExiste : this.agendamentos) {
+            if (agendamentoExiste.getDataConsulta().equals(novoAgendamento.getDataConsulta()) &&
+                agendamentoExiste.getHora().equals(novoAgendamento.getHora()) &&
+                agendamentoExiste.getEspecialidade().equalsIgnoreCase(novoAgendamento.getEspecialidade())) {
 
-            System.out.println("\nERRO: Já existe um agendamento para a especialidade '" + novoAgendamento.getEspecialidade() +
-            "' neste mesmo horário (" + novoAgendamento.getDataConsulta() + " às " + novoAgendamento.getHora() + ").\n");
-            return;
+                return "ERRO: Já existe um agendamento para a especialidade '" + novoAgendamento.getEspecialidade() +
+                    "' neste mesmo horário.";
             }
         }
         this.agendamentos.add(novoAgendamento);
-        System.out.println("\nAgendamento para " + novoAgendamento.getAnimal().getNome() + 
-        "(Especialidade " + novoAgendamento.getEspecialidade() + ") realizado com sucesso! \n");
+        return "Agendamento para " + novoAgendamento.getAnimal().getNome() + " realizado com sucesso!";
     }
 
     public boolean cancelarAgendamento(Agendamento agendamento) {
