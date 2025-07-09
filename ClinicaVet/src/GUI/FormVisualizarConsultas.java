@@ -82,8 +82,9 @@ public class FormVisualizarConsultas extends JDialog {
         for (Consulta consulta : todasAsConsultas) {
             boolean problemaContem = consulta.getProblema().toLowerCase().contains(termoBuscaLower);
             boolean diagnosticoContem = consulta.getDiagnostico().toLowerCase().contains(termoBuscaLower);
+            boolean especialidadeContem = consulta.getVeterinario().getEspecialidade().toLowerCase().contains(termoBuscaLower);
 
-            if (problemaContem || diagnosticoContem) {
+            if (problemaContem || diagnosticoContem || especialidadeContem) {
                 modeloFiltrado.addElement(consulta);
             }
         }
