@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class Clinica {
@@ -159,18 +159,36 @@ public class Clinica {
         return null;
     }
 
-    public String agendar(Agendamento agendamento) {
-        agendamentos.add(agendamento);
-        return "Agendamento para " + agendamento.getAnimal().getNome() + " realizado!";
+    /**
+     * Agenda uma consulta, verificando se já não existe um agendamento
+     * para a mesma data, hora e especialidade.
+     * @param novoAgendamento O agendamento a ser criado.
+     */
+    public void agendar(Agendamento novoAgendamento) {
+        for(Agendamento agendamentoExiste : this.agendamentos){
+            //Verifica se data, hora e especialidade sãos iguais
+            if(agendamentoExiste.getDataConsulta().equals(novoAgendamento.getDataConsulta()) && 
+            agendamentoExiste.getHora().equals(novoAgendamento.getHora()) &&
+            agendamentoExiste.getEspecialidade().equalsIgnoreCase(novoAgendamento.getEspecialidade())){
+
+            System.out.println("\nERRO: Já existe um agendamento para a especialidade '" + novoAgendamento.getEspecialidade() +
+            "' neste mesmo horário (" + novoAgendamento.getDataConsulta() + " às " + novoAgendamento.getHora() + ").\n");
+            return;
+            }
+        }
+        this.agendamentos.add(novoAgendamento);
+        System.out.println("\nAgendamento para " + novoAgendamento.getAnimal().getNome() + 
+        "(Especialidade " + novoAgendamento.getEspecialidade() + ") realizado com sucesso! \n");
     }
 
     public boolean cancelarAgendamento(Agendamento agendamento) {
         boolean removido = agendamentos.remove(agendamento);
-        if (removido) {
-            return true;
+        if(removido){
+            System.out.println("Agendamento cancelado com sucesso.");
         } else {
-            return false;
+            System.out.println("Agendamento não encontrado.");
         }
+        return removido;
     }
 
     /**
@@ -244,6 +262,26 @@ public class Clinica {
         // Ordena a lista por data de validade para melhor visualização
         vacinasAVencer.sort(Comparator.comparing(VacinaAplicada::getDataDeValidade));
         return vacinasAVencer;
+    }
+
+    public void consultarHistoricoConsultas(Animal animal){
+        System.out.println("\n--- Histórico de Consultas de " + animal.getNome() + " ---");
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Prontuario prontuario = animal.getProntuario();
+
+        if(prontuario.getConsultas().isEmpty()){
+            System.out.println("Nenhum registro de consulta encontrado para este animal.");
+        } else {
+            for(Consulta consulta : prontuario.getConsultas()){
+                System.out.println("----------------------------------------");
+                System.out.println("Data: " + consulta.getDataConsulta().format(formatador));
+                System.out.println("Veterinário(a): " + consulta.getVeterinario().getNome());
+                System.out.println("Problema Relatado: " + consulta.getProblema());
+                System.out.println("Diagnóstico: " + consulta.getDiagnostico());
+                System.out.println("Medicação/Tratamento: " + consulta.getMedicamento());
+            }
+            System.out.println("----------------------------------------");
+        }
     }
 
     //gets

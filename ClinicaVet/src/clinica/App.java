@@ -36,15 +36,23 @@ public class App {
 
         // 4. Demonstração de Agendamento e Cancelamento
         System.out.println("--- Gerenciando Agendamentos ---");
-        LocalDate dataAgendamento = LocalDate.of(2025, 7, 10);
-        Agendamento agendamentoMongryong = new Agendamento(dataAgendamento, "10:00", "Check-up Anual", petMongryong);
+        LocalDate dataAgendamento = LocalDate.of(2025, 8, 20);
 
-        // Agendando a consulta
-        clinica.agendar(agendamentoMongryong);
+        // Agendamento 1: Cardiologia (Será bem-sucedido)
+        Agendamento agendamentoCardio = new Agendamento(dataAgendamento, "14:00", "Cardiologia", petMongryong);
+        clinica.agendar(agendamentoCardio);
+
+        // Agendamento 2: Oftalmologia no mesmo horário (Será bem-sucedido)
+        Agendamento agendamentoOftalmo = new Agendamento(dataAgendamento, "14:00", "Oftalmologia", petBunny);
+        clinica.agendar(agendamentoOftalmo);
+
+        // Agendamento 3: Cardiologia no mesmo horário (Será bloqueado)
+        Agendamento agendamentoCardioRepetido = new Agendamento(dataAgendamento, "14:00", "Cardiologia", petBunny);
+        clinica.agendar(agendamentoCardioRepetido);
 
         // Cancelando a consulta
         System.out.println("Baekhyun precisa cancelar o agendamento devido a um show...");
-        clinica.cancelarAgendamento(agendamentoMongryong);
+        clinica.cancelarAgendamento(agendamentoCardio);
         System.out.println();
 
         // 5. Atendimento do pet do Suho
@@ -77,6 +85,10 @@ public class App {
         System.out.println("--- Imprimindo Documentos de 'Bunny' ---\n");
         clinica.imprimirDocumento(petBunny.getProntuario());
         clinica.imprimirDocumento(petBunny.getCartaoVacina());
+
+        // 10. Consultar o histórico do Bunny
+        System.out.println("\n--- Consultando o histórico de 'Bunny' ---\n");
+        clinica.consultarHistoricoConsultas(petBunny);
 
         System.out.println("--- Sistema Finalizado. We Are One! ---");
     }
