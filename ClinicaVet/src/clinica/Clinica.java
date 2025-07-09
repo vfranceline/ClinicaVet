@@ -43,7 +43,7 @@ public class Clinica {
 
     /**
      * Calcula o valor total de uma lista de itens faturáveis (consultas, vacinas, etc.).
-     * Este método é um excelente exemplo de POLIMORFISMO, pois opera sobre a interface Faturavel,
+     * opera sobre a interface Faturavel,
      * tratando diferentes tipos de objetos (Consulta, Vacina) de forma uniforme.
      *
      * @param tutor O tutor que receberá a cobrança.
@@ -61,7 +61,7 @@ public class Clinica {
 
     /**
      * Imprime o conteúdo de um documento que implementa a interface Imprimivel.
-     * Outro exemplo de POLIMORFISMO, tratando diferentes tipos de documentos (Prontuario,
+     * trata diferentes tipos de documentos (Prontuario,
      * CartaoVacina, FaturaTutor) com a mesma chamada de método.
      *
      * @param documento O documento a ser impresso no console.
