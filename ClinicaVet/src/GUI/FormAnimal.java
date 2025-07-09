@@ -35,7 +35,7 @@ public class FormAnimal extends JFrame {
         this.clinica = clinica;
 
         setTitle("Gerenciar Animais");
-        setSize(800, 450);
+        setSize(850, 480);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
@@ -69,15 +69,20 @@ public class FormAnimal extends JFrame {
         painelCadastro.add(painelCampos, BorderLayout.CENTER);
 
         // Botões
-        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel painelBotoes = new JPanel(new GridLayout(2, 2, 5, 5));
+        painelBotoes.setBorder(BorderFactory.createEmptyBorder(5,5, 5,5));
         btnSalvar = new JButton("Salvar");
         btnExcluir = new JButton("Excluir");
         btnConsultarVacinas = new JButton("Consultar Vacinas");
+        btnConsultarConsultas = new JButton("Consultar Consultas");
+
         btnExcluir.setEnabled(false);
         btnConsultarVacinas.setEnabled(false);
+        btnConsultarConsultas.setEnabled(false);
         painelBotoes.add(btnSalvar);
         painelBotoes.add(btnExcluir);
         painelBotoes.add(btnConsultarVacinas);
+        painelBotoes.add(btnConsultarConsultas);
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
@@ -110,6 +115,7 @@ public class FormAnimal extends JFrame {
         btnSalvar.addActionListener(e -> salvarAnimal());
         btnExcluir.addActionListener(e -> excluirAnimal());
         btnConsultarVacinas.addActionListener(e -> exibirVacinas());
+        btnConsultarConsultas.addActionListener(e -> exibirConsultas());
         
         // Filtro de busca
         txtBuscarAnimal.addKeyListener(new KeyAdapter() {
@@ -127,10 +133,12 @@ public class FormAnimal extends JFrame {
                     preencherCampos(animalSelecionado);
                     btnExcluir.setEnabled(true);
                     btnConsultarVacinas.setEnabled(true);
+                    btnConsultarConsultas.setEnabled(true);
                 } else {
                     limparCampos();
                     btnExcluir.setEnabled(false);
                     btnConsultarVacinas.setEnabled(false);
+                    btnConsultarConsultas.setEnabled(false);
                 }
             }
         });
@@ -301,4 +309,16 @@ public class FormAnimal extends JFrame {
         }
     }
 
+    /**
+     * Exibe o prontuário do animal selecionado.
+     */
+    private void exibirConsultas() {
+        if (animalSelecionado != null) {
+            // Cria e exibe a janela de diálogo com as consultas
+            FormVisualizarConsultas dialogo = new FormVisualizarConsultas(this, animalSelecionado);
+            dialogo.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um animal para visualizar as consultas.", "Nenhum Animal Selecionado", JOptionPane.WARNING_MESSAGE);
+        }
+    }
 }

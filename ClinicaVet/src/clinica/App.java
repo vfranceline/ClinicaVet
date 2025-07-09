@@ -71,7 +71,7 @@ public class App {
 
         // 7. Consulta de Vacinas a vencer
         System.out.println("--- Consultando Vacina em 'Bunny' ---");
-        clinica.consultarVacinasAVencer(petBunny, dataConsulta.plusYears(1).minusDays(15));
+        // clinica.consultarVacinasAVencer(petBunny, dataConsulta.plusYears(1).minusDays(15));
 
         // 8. Gerar Cobrança para o Suho
         System.out.println("--- Gerando Faturamento para Suho ---");
