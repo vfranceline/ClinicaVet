@@ -26,7 +26,7 @@ public class FormAnimal extends JFrame {
     private JTextField txtNome, txtRaca, txtDataNascimento, txtBuscarAnimal;
     private JList<Animal> listaAnimais;
     private DefaultListModel<Animal> listModel;
-    private JButton btnSalvar, btnExcluir;
+    private JButton btnSalvar, btnExcluir, btnConsultarVacinas;
 
     private Animal animalSelecionado = null;
 
@@ -38,7 +38,7 @@ public class FormAnimal extends JFrame {
         this.clinica = clinica;
 
         setTitle("Gerenciar Animais");
-        setSize(800, 400);
+        setSize(800, 450);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
@@ -75,9 +75,12 @@ public class FormAnimal extends JFrame {
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnSalvar = new JButton("Salvar");
         btnExcluir = new JButton("Excluir");
+        btnConsultarVacinas = new JButton("Consultar Vacinas");
         btnExcluir.setEnabled(false);
+        btnConsultarVacinas.setEnabled(false);
         painelBotoes.add(btnSalvar);
         painelBotoes.add(btnExcluir);
+        painelBotoes.add(btnConsultarVacinas);
         painelCadastro.add(painelBotoes, BorderLayout.SOUTH);
 
         // --- PAINEL DA LISTA (DIREITA) ---
@@ -106,7 +109,9 @@ public class FormAnimal extends JFrame {
 
         btnSalvar.addActionListener(e -> salvarAnimal());
         btnExcluir.addActionListener(e -> excluirAnimal());
-
+        btnConsultarVacinas.addActionListener(e -> exibirVacinas());
+        
+        
         txtBuscarAnimal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -120,9 +125,11 @@ public class FormAnimal extends JFrame {
                 if (animalSelecionado != null) {
                     preencherCampos(animalSelecionado);
                     btnExcluir.setEnabled(true);
+                    btnConsultarVacinas.setEnabled(true);
                 } else {
                     limparCampos();
                     btnExcluir.setEnabled(false);
+                    btnConsultarVacinas.setEnabled(false);
                 }
             }
         });
@@ -274,6 +281,19 @@ public class FormAnimal extends JFrame {
             if (animal.getNome().toLowerCase().contains(termoBusca)) {
                 listModel.addElement(animal);
             }
+        }
+    }
+
+    /**
+     * Exibe o cartão de vacinas do animal selecionado.
+     */
+    private void exibirVacinas() {
+        if (animalSelecionado != null) {
+            // Cria e exibe a janela de diálogo com as vacinas
+            FormVisualizarVacinas dialogo = new FormVisualizarVacinas(this, animalSelecionado);
+            dialogo.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um animal para consultar as vacinas.", "Nenhum Animal Selecionado", JOptionPane.WARNING_MESSAGE);
         }
     }
 
