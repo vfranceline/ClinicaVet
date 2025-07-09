@@ -1,8 +1,10 @@
+package clinica;
+
 public class Pessoa{
-    protect String nome;
-    protect String cpf;
-    protect String email;
-    protect String telefone;
+    protected String nome;
+    protected String cpf;
+    protected String email;
+    protected String telefone;
   
     public Pessoa(String nome, String cpf, String email, String telefone) {
         this.nome = nome;
