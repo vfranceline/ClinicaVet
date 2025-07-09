@@ -2,6 +2,10 @@ package clinica;
 
 import java.time.LocalDate;
 
+/**
+ * Representa uma vacina aplicada a um animal, contendo informações sobre a vacina,
+ * a data de aplicação e a data de validade.
+ */
 public class VacinaAplicada {
     private Vacina vacina;
     private LocalDate dataDeAplicacao; // Alterado de String para LocalDate

@@ -9,11 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Formulário para o gerenciamento completo de veterinários (inclusão, alteração, exclusão e consulta).
- * Utiliza um layout aprimorado para facilitar a visualização e manipulação dos dados.
- *
- * @author [Seu Nome]
- * @version 1.2
+ * Formulário para gerenciar veterinários na clínica veterinária.
+ * Permite cadastrar, editar, excluir e buscar veterinários.
+ * A interface é dividida em dois painéis: um para cadastro e outro para exibição da lista de veterinários.
  */
 public class FormVeterinario extends JFrame {
 
@@ -28,10 +26,6 @@ public class FormVeterinario extends JFrame {
 
     private Veterinario vetSelecionado = null; // Armazena o veterinário selecionado na lista
 
-    /**
-     * Construtor do formulário de gerenciamento de veterinários.
-     * @param clinica A instância da clínica para acesso e manipulação dos dados.
-     */
     public FormVeterinario(Clinica clinica) {
         this.clinica = clinica;
 
@@ -98,19 +92,23 @@ public class FormVeterinario extends JFrame {
         JPanel painelLista = new JPanel(new BorderLayout(5, 5));
         painelLista.setBorder(BorderFactory.createTitledBorder("Veterinários Cadastrados"));
 
+        // Painel de busca para filtrar veterinários por nome
         JPanel painelBusca = new JPanel(new BorderLayout());
         painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
         txtBuscarVeterinario = new JTextField();
         painelBusca.add(txtBuscarVeterinario, BorderLayout.CENTER);
         painelLista.add(painelBusca, BorderLayout.NORTH);
 
+        // Modelo da lista e componente JList para exibir os veterinários
         listModel = new DefaultListModel<>();
         listaVeterinarios = new JList<>(listModel);
         listaVeterinarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        // Adiciona a lista dentro de um JScrollPane para rolagem
         JScrollPane scrollPane = new JScrollPane(listaVeterinarios);
         painelLista.add(scrollPane, BorderLayout.CENTER);
 
+        // Divide a tela entre o painel de cadastro e o painel da lista
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, painelLista);
         splitPane.setDividerLocation(450);
         add(splitPane, BorderLayout.CENTER);

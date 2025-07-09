@@ -3,6 +3,11 @@ package clinica;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Classe que representa o prontuário de um animal na clínica veterinária.
+ * Contém uma lista de consultas realizadas, permitindo adicionar, remover
+ * e gerar um conteúdo formatado para impressão.
+ */
 public class Prontuario implements Imprimivel {
     private ArrayList<Consulta> consultas;
 

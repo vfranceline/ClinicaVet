@@ -2,6 +2,10 @@ package clinica;
 
 import java.util.ArrayList;
 
+/**
+ * Classe que representa um tutor de animais na clínica veterinária.
+ * Herda da classe Pessoa e adiciona o atributo endereço e uma lista de animais.
+ */
 public class Tutor extends Pessoa{
     protected String endereco;
     private ArrayList<Animal> animais;

@@ -13,8 +13,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Formulário para gerenciamento de animais, permitindo cadastro, edição e exclusão.
- * Associa cada animal a um tutor previamente cadastrado.
+ * Formulário para o gerenciamento de animais na clínica veterinária.
+ * Permite cadastrar, editar, excluir e consultar animais e suas vacinas.
+ * Utiliza a classe Clinica para manipulação dos dados.
  */
 public class FormAnimal extends JFrame {
 
@@ -26,14 +27,10 @@ public class FormAnimal extends JFrame {
     private JTextField txtNome, txtRaca, txtDataNascimento, txtBuscarAnimal;
     private JList<Animal> listaAnimais;
     private DefaultListModel<Animal> listModel;
-    private JButton btnSalvar, btnExcluir, btnConsultarVacinas;
+    private JButton btnSalvar, btnExcluir, btnConsultarVacinas, btnConsultarConsultas;
 
     private Animal animalSelecionado = null;
 
-    /**
-     * Construtor do formulário de gerenciamento de animais.
-     * @param clinica A instância da clínica para manipulação dos dados.
-     */
     public FormAnimal(Clinica clinica) {
         this.clinica = clinica;
 
@@ -87,18 +84,21 @@ public class FormAnimal extends JFrame {
         JPanel painelLista = new JPanel(new BorderLayout(5, 5));
         painelLista.setBorder(BorderFactory.createTitledBorder("Animais Cadastrados"));
 
+        // Painel de busca
         JPanel painelBusca = new JPanel(new BorderLayout());
         painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
         txtBuscarAnimal = new JTextField();
         painelBusca.add(txtBuscarAnimal, BorderLayout.CENTER);
         painelLista.add(painelBusca, BorderLayout.NORTH);
 
+        // Lista de animais
         listModel = new DefaultListModel<>();
         listaAnimais = new JList<>(listModel);
         personalizarListaAnimais();
         JScrollPane scrollPane = new JScrollPane(listaAnimais);
         painelLista.add(scrollPane, BorderLayout.CENTER);
 
+        // Configurações da lista
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelCadastro, painelLista);
         splitPane.setDividerLocation(400);
         add(splitPane, BorderLayout.CENTER);
@@ -111,7 +111,7 @@ public class FormAnimal extends JFrame {
         btnExcluir.addActionListener(e -> excluirAnimal());
         btnConsultarVacinas.addActionListener(e -> exibirVacinas());
         
-        
+        // Filtro de busca
         txtBuscarAnimal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -119,6 +119,7 @@ public class FormAnimal extends JFrame {
             }
         });
 
+        // Seleção de animal na lista
         listaAnimais.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 animalSelecionado = listaAnimais.getSelectedValue();
@@ -141,8 +142,10 @@ public class FormAnimal extends JFrame {
         return gbc;
     }
 
+    
     /**
-     * Salva um novo animal ou atualiza um existente.
+     * Salva ou atualiza os dados do animal.
+     * Valida os campos obrigatórios e exibe mensagens de sucesso ou erro.
      */
     private void salvarAnimal() {
         String nome = txtNome.getText().trim();
@@ -179,7 +182,8 @@ public class FormAnimal extends JFrame {
     }
 
     /**
-     * Exclui o animal selecionado.
+     * Exclui o animal selecionado após confirmação do usuário.
+     * Exibe mensagens de sucesso ou erro conforme necessário.
      */
     private void excluirAnimal() {
         if (animalSelecionado == null) return;

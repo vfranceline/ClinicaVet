@@ -2,6 +2,12 @@ package clinica;
 
 import java.time.LocalDate;
 
+/**
+ * Classe que representa uma consulta veterinária.
+ * Implementa a interface Faturavel para calcular o valor da consulta.
+ * Contém informações sobre o veterinário, problema, diagnóstico, medicamento,
+ * data da consulta e preço.
+ */
 public class Consulta implements Faturavel {
     private Veterinario veterinario;
     private String problema;

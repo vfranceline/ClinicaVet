@@ -10,7 +10,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Formulário para registrar atendimentos, como consultas e aplicação de vacinas.
+ * Utiliza um JTabbedPane para organizar os diferentes tipos de atendimento em abas.
+ */
 public class FormAtendimento extends JFrame {
 
     private final Clinica clinica;
@@ -39,17 +42,18 @@ public class FormAtendimento extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         // --- PAINEL SUPERIOR: SELEÇÃO DO ANIMAL ---
+        // Este painel é comum a todas as abas de atendimento.
         JPanel painelSelecao = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelSelecao.setBorder(BorderFactory.createTitledBorder("Seleção do Paciente"));
         painelSelecao.add(new JLabel("Selecione o Animal:"));
 
         comboAnimais = new JComboBox<>();
-        personalizarComboAnimais();
+        personalizarComboAnimais(); // Renderizador para exibir nome do animal e tutor.
         atualizarComboAnimais();
         painelSelecao.add(comboAnimais);
         add(painelSelecao, BorderLayout.NORTH);
 
-        // Define o animal selecionado inicial
+        // Define o animal selecionado inicial e atualiza quando a seleção muda.
         if (comboAnimais.getItemCount() > 0) {
             animalSelecionado = (Animal) comboAnimais.getSelectedItem();
         }
@@ -58,6 +62,7 @@ public class FormAtendimento extends JFrame {
         comboAnimais.addActionListener(e -> animalSelecionado = (Animal) comboAnimais.getSelectedItem());
 
         // --- PAINEL CENTRAL: ABAS DE ATENDIMENTO ---
+        // JTabbedPane é uma ótima escolha para organizar múltiplas telas em um mesmo formulário.
         JTabbedPane abas = new JTabbedPane();
         abas.setFont(new Font("SansSerif", Font.PLAIN, 14));
         abas.addTab(" Registar Consulta ", criarAbaConsulta());
@@ -138,8 +143,9 @@ public class FormAtendimento extends JFrame {
         return painel;
     }
 
-    /**
+     /**
      * Salva as informações da consulta, adiciona ao prontuário do animal e gera a cobrança.
+     * Centraliza a lógica de negócio, interagindo com a classe Clinica.
      */
     private void salvarConsulta() {
         if (animalSelecionado == null) {
@@ -152,10 +158,13 @@ public class FormAtendimento extends JFrame {
             String problema = txtProblema.getText();
             String diagnostico = txtDiagnostico.getText();
 
-            Consulta novaConsulta = new Consulta(vet, problema, diagnostico, txtMedicamento.getText(), LocalDate.now()); //
-            animalSelecionado.adicionarConsulta(novaConsulta); //
+            // 1. Cria o objeto da consulta
+            Consulta novaConsulta = new Consulta(vet, problema, diagnostico, txtMedicamento.getText(), LocalDate.now());
 
-            // Gera a cobrança
+            // 2. Registra a consulta no prontuário do animal
+            animalSelecionado.adicionarConsulta(novaConsulta); 
+
+            // 3. Gera a cobrança (usando a interface Faturavel)
             List<Faturavel> itens = new ArrayList<>(); //
             itens.add(novaConsulta);
             double total = clinica.emitirCobranca(animalSelecionado.getTutor(), itens); //
@@ -190,9 +199,14 @@ public class FormAtendimento extends JFrame {
                 JOptionPane.showMessageDialog(this, "Selecione uma vacina.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (dataValidade.isBefore(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this, "A data de validade não pode ser anterior a hoje.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // 1. Registra a aplicação da vacina
             clinica.aplicarVacina(animalSelecionado, vacinaSelecionada, LocalDate.now(), dataValidade); //
 
-            // Gera a cobrança
+            // 2. Gera a cobrança (usando a interface Faturavel)
             List<Faturavel> itens = new ArrayList<>(); //
             itens.add(vacinaSelecionada);
             double total = clinica.emitirCobranca(animalSelecionado.getTutor(), itens); //
@@ -234,6 +248,10 @@ public class FormAtendimento extends JFrame {
         }
     }
 
+    /**
+     * Personaliza o JComboBox para exibir o nome do animal e de seu tutor.
+     * Melhora a usabilidade, mostrando informação relevante em vez do nome da classe.
+     */
     private void personalizarComboAnimais() {
         comboAnimais.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -248,6 +266,10 @@ public class FormAtendimento extends JFrame {
         });
     }
 
+    /**
+     * Personaliza o JComboBox para exibir o nome do veterinário.
+     * Facilita a identificação do profissional selecionado.
+     */
     private void personalizarComboVeterinarios() {
         comboVeterinarios.setRenderer(new DefaultListCellRenderer() {
             @Override

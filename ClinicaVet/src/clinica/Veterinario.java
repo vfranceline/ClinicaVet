@@ -2,6 +2,10 @@ package clinica;
 
 import java.util.ArrayList;
 
+/**
+ * Classe que representa um veterinário na clínica veterinária.
+ * Herda da classe Funcionario e adiciona os atributos especialidade, cfmv e uma lista de consultas.
+ */
 public class Veterinario extends Funcionario {
     protected String especialidade;
     protected String cfmv;

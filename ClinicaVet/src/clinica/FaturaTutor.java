@@ -4,6 +4,12 @@ package clinica;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+
+/**
+ * Classe responsável por gerar a fatura detalhada de um tutor, incluindo os custos
+ * dos serviços prestados aos animais sob sua responsabilidade.
+ * Implementa a interface Imprimivel para permitir a impressão do conteúdo formatado.
+ */
 public class FaturaTutor implements Imprimivel {
     private Tutor tutor;
 

@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 import clinica.Clinica;
 import clinica.Tutor;
 
+/**
+ * Formulário para gerenciar tutores na clínica veterinária.
+ * Permite cadastrar, editar, excluir e buscar tutores.
+ * A interface é dividida em dois painéis: um para cadastro e outro para exibição da lista de tutores.
+ */
 public class FormTutor extends JFrame {
 
     private final Clinica clinica;
@@ -80,12 +85,14 @@ public class FormTutor extends JFrame {
         JPanel painelLista = new JPanel(new BorderLayout(5, 5));
         painelLista.setBorder(BorderFactory.createTitledBorder("Tutores Cadastrados"));
 
+        // Painel de busca
         JPanel painelBusca = new JPanel(new BorderLayout());
         painelBusca.add(new JLabel("Buscar por Nome:"), BorderLayout.WEST);
         txtBuscarTutor = new JTextField();
         painelBusca.add(txtBuscarTutor, BorderLayout.CENTER);
         painelLista.add(painelBusca, BorderLayout.NORTH);
 
+        // Lista de tutores
         listModel = new DefaultListModel<>();
         listaTutores = new JList<>(listModel);
         listaTutores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Apenas uma seleção por vez
@@ -102,6 +109,7 @@ public class FormTutor extends JFrame {
             }
         });
 
+        // Adiciona a lista dentro de um JScrollPane para rolagem
         JScrollPane scrollPane = new JScrollPane(listaTutores);
         painelLista.add(scrollPane, BorderLayout.CENTER);
 
@@ -114,6 +122,8 @@ public class FormTutor extends JFrame {
         btnEditar.addActionListener(e -> editarTutor());
         btnExcluir.addActionListener(e -> excluirTutor());
 
+        // Listener para o campo de busca
+        // Atualiza a lista de tutores conforme o usuário digita
         txtBuscarTutor.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

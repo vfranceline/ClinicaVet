@@ -11,9 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Janela de diálogo para visualizar e buscar no cartão de vacinas de um animal.
- * @author [Seu Nome]
- * @version 1.1
+ * Formulário para visualizar o cartão de vacinas de um animal.
+ * Permite buscar vacinas por nome e exibe detalhes de cada vacina aplicada.
+ * A interface é dividida em três partes: busca, lista de vacinas e botões de ação.
  */
 public class FormVisualizarVacinas extends JDialog {
 

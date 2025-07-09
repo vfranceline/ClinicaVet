@@ -1,5 +1,9 @@
 package clinica;
 
+/**
+ * Classe que representa um funcionário da clínica veterinária.
+ * Herda da classe Pessoa e adiciona o atributo turno de trabalho.
+ */
 public class Funcionario extends Pessoa{
     protected String turnoDeTrabalho;
 

@@ -2,6 +2,10 @@ package clinica;
 
 import java.time.LocalDate;
 
+/**
+ * Classe que representa um agendamento de consulta veterinária.
+ * Contém informações sobre a data, hora, especialidade e o animal associado ao agendamento.
+ */
 public class Agendamento {
     private LocalDate dataConsulta;
     private String hora;

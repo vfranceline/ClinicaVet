@@ -13,11 +13,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Formulário para emissão de documentos e relatórios, como o Prontuário
- * e o Cartão de Vacinas de um animal específico.
- *
- * @author [Seu Nome]
- * @version 1.2
+ * Formulário para emissão de diversos documentos e relatórios da clínica.
+ * Demonstra um ótimo uso de polimorfismo ao usar a interface 'Imprimivel'
+ * para gerar diferentes tipos de relatórios (Prontuário, Cartão de Vacinas, Fatura).
  */
 public class FormRelatorios extends JFrame {
 
@@ -28,16 +26,11 @@ public class FormRelatorios extends JFrame {
     private JComboBox<Animal> comboAnimais;
     private JTextArea areaRelatorio;
 
-    /**
-     * Construtor do formulário de relatórios.
-     * @param clinica A instância da clínica para obter os dados necessários.
-     */
     public FormRelatorios(Clinica clinica) {
         this.clinica = clinica;
 
         setTitle("Emissão de Documentos e Relatórios");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
         ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -51,6 +44,7 @@ public class FormRelatorios extends JFrame {
         atualizarComboAnimais();
         painelSelecao.add(comboAnimais);
 
+        // Botões para cada tipo de relatório.
         JButton btnProntuario = new JButton("Gerar Prontuário");
         JButton btnCartaoVacina = new JButton("Gerar Cartão de Vacina");
         JButton btnFaturaTutor = new JButton("Gerar Fatura do Tutor");
@@ -109,6 +103,10 @@ public class FormRelatorios extends JFrame {
         }
     }
 
+    /**
+     * Gera e exibe a fatura do tutor do animal selecionado.
+     * Utiliza a classe FaturaTutor para formatar o conteúdo da fatura.
+     */
     private void gerarFaturaTutor(){
         Animal animalSelecionado = (Animal) comboAnimais.getSelectedItem();
 
@@ -123,6 +121,10 @@ public class FormRelatorios extends JFrame {
         }
     }
 
+    /**
+     * Gera um relatório de vacinas que vencem no mês atual para o animal selecionado.
+     * Exibe as vacinas aplicadas com suas respectivas datas de validade.
+     */
     private void gerarRelatorioVencimentoVacina() {
         Animal animalSelecionado = (Animal) comboAnimais.getSelectedItem();
         if (animalSelecionado == null) return; // Se nenhum animal for selecionado, interrompe a execução
@@ -155,15 +157,15 @@ public class FormRelatorios extends JFrame {
         exibirRelatorio(relatorio.toString());
     }
 
-    // Método auxiliar para encontrar o animal a partir da vacina aplicada
-    private Animal buscarAnimalPorVacina(VacinaAplicada vacinaApp) {
-        for (Animal animal : clinica.getAnimais()) {
-            if (animal.getCartaoVacina().getVacinasAplicadas().contains(vacinaApp)) {
-                return animal;
-            }
-        }
-        return null;
-    }
+    // // Método auxiliar para encontrar o animal a partir da vacina aplicada
+    // private Animal buscarAnimalPorVacina(VacinaAplicada vacinaApp) {
+    //     for (Animal animal : clinica.getAnimais()) {
+    //         if (animal.getCartaoVacina().getVacinasAplicadas().contains(vacinaApp)) {
+    //             return animal;
+    //         }
+    //     }
+    //     return null;
+    // }
 
     private void exibirRelatorio(String conteudo) {
         areaRelatorio.setText(conteudo);

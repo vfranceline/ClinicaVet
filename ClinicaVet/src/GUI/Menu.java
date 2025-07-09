@@ -1,48 +1,49 @@
 package GUI;
 
-import clinica.Clinica;
-import clinica.Funcionario;
-import clinica.Tutor;
-import clinica.Veterinario;
-import clinica.Animal;
-
+import clinica.*; // Importa todas as classes do modelo de negócio
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
+/**
+ * Janela principal da aplicação, servindo como o menu de navegação.
+ * A partir daqui, o usuário pode acessar todos os outros formulários do sistema.
+ */
 public class Menu extends JFrame {
-    private final Clinica clinica;
+    private final Clinica clinica; // Armazena a instância única da classe de negócio.
 
-    //construtor da janela do menu inicial
+    /**
+     * Construtor do Menu.
+     * Inicializa a instância da clínica, prepara dados de teste e constrói a interface.
+     */
     public Menu (){
         this.clinica = new Clinica();
 
-        preparaDadosIniciais(); //testes
-        
-        //configurações da janela principal
+        preparaDadosIniciais(); // Método para popular o sistema com dados para facilitar testes.
+
+        // Configurações da janela principal.
         setTitle("Clínica Veterinária - Menu Principal");
         setSize(600, 450);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centraliza a janela na tela
-        setLayout(new BorderLayout(10, 10)); // Layout principal
+        setLocationRelativeTo(null); // Centraliza a janela.
+        setLayout(new BorderLayout(10, 10));
 
-        //painel de titulo
+        // Painel do título, com um estilo visual destacado.
         JPanel painelTitulo = new JPanel();
         painelTitulo.setBackground(new Color(70, 130, 180));
         painelTitulo.setPreferredSize(new Dimension(600, 80));
-
         JLabel labelTitulo = new JLabel("Bem-vindo à Clínica Veterinária");
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         labelTitulo.setForeground(Color.WHITE);
         painelTitulo.add(labelTitulo);
         add(painelTitulo, BorderLayout.NORTH);
 
-        //painel de botões
+        // Painel central com os botões de navegação, organizado em grade.
         JPanel painelBotoes = new JPanel();
-        painelBotoes.setBorder(BorderFactory.createEmptyBorder(15, 30, 15, 30)); // Espaçamento interno
-        painelBotoes.setLayout(new GridLayout(3, 2, 15, 15)); // Grade 3x2 com espaçamento    
-        
-        //criando botões e adicionando ao painel
+        painelBotoes.setBorder(BorderFactory.createEmptyBorder(15, 30, 15, 30));
+        painelBotoes.setLayout(new GridLayout(3, 2, 15, 15)); // Grade 3x2 com espaçamento.
+
+        // Criação e adição dos botões.
         JButton btnCadastroTutor = criarButton("Gerenciar Tutores");
         JButton btnCadastroAnimal = criarButton("Gerenciar Animais");
         JButton btnGerenciarFuncionarios = criarButton("Gerenciar Funcionarios");
@@ -59,30 +60,34 @@ public class Menu extends JFrame {
 
         add(painelBotoes, BorderLayout.CENTER);
 
-        //adicionando ações aos botões
+        // --- Ações dos Botões (Listeners) ---
+        // Cada botão abre o formulário correspondente, passando a instância da clínica.
         btnCadastroTutor.addActionListener(e -> new FormTutor(this.clinica).setVisible(true));
         btnCadastroAnimal.addActionListener(e -> new FormAnimal(this.clinica).setVisible(true));
         btnGerenciarFuncionarios.addActionListener(e -> new FormTipoFuncionario(this.clinica).setVisible(true));
         btnAtendimento.addActionListener(e -> new FormAtendimento(this.clinica).setVisible(true));
         btnRelatorios.addActionListener(e -> new FormRelatorios(this.clinica).setVisible(true));
-        btnAgendamento.addActionListener(e -> new FormAgendamento(this.clinica).setVisible(true));        
-
+        btnAgendamento.addActionListener(e -> new FormAgendamento(this.clinica).setVisible(true));
     }
 
+    /**
+     * Ponto de entrada da aplicação.
+     * Configura o Look and Feel para uma aparência nativa e inicializa a janela do menu.
+     */
     public static void main(String[] args) {
-        // Tenta aplicar o Look and Feel do sistema para uma aparência nativa
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            e.printStackTrace(); // Em caso de erro, imprime o stack trace
+            e.printStackTrace();
         }
 
-        // Garante que a interface gráfica seja criada e atualizada na Event Dispatch Thread (EDT)
+        // Garante que a interface seja executada na Event Dispatch Thread (EDT).
         SwingUtilities.invokeLater(() -> new Menu().setVisible(true));
     }
 
     /**
-     * Método auxiliar para criar e estilizar um JButton.
+     * Método auxiliar para criar e estilizar um JButton, promovendo a reutilização
+     * de código e a consistência visual.
      * @param texto O texto a ser exibido no botão.
      * @return Um objeto JButton estilizado.
      */
@@ -96,6 +101,10 @@ public class Menu extends JFrame {
         return button;
     }
 
+    /**
+     * Popula a instância da clínica com dados iniciais para demonstração e teste.
+     * Isso evita a necessidade de cadastrar tudo manualmente a cada execução.
+     */
     private void preparaDadosIniciais() {
         // Cadastro de Tutores
         Tutor tutorJoao = new Tutor("João Silva", "123.456.789-00", "joao.silva@email.com", "(11) 91234-5678", "Rua das Flores, 123");

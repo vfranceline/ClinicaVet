@@ -3,6 +3,12 @@ package clinica;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Classe que representa o cartão de vacinas de um animal.
+ * Contém uma lista de vacinas aplicadas, permitindo adicionar novas vacinas
+ * e gerar um conteúdo formatado para impressão.
+ */
 public class CartaoVacina implements Imprimivel {
     private List<VacinaAplicada> vacinasAplicadas;
 

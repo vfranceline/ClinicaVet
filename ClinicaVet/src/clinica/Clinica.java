@@ -7,6 +7,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Classe central do sistema, que atua como uma fachada para a lógica de negócio.
+ * Ela gerencia todas as listas de dados (animais, tutores, funcionários, etc.) e centraliza
+ * as operações principais da clínica, como cadastros, agendamentos e faturamento.
+ * A GUI interage diretamente com esta classe, que delega as responsabilidades para as
+ * outras classes do modelo.
+ */
 
 public class Clinica {
 
@@ -34,6 +41,15 @@ public class Clinica {
         ));
     } 
 
+    /**
+     * Calcula o valor total de uma lista de itens faturáveis (consultas, vacinas, etc.).
+     * Este método é um excelente exemplo de POLIMORFISMO, pois opera sobre a interface Faturavel,
+     * tratando diferentes tipos de objetos (Consulta, Vacina) de forma uniforme.
+     *
+     * @param tutor O tutor que receberá a cobrança.
+     * @param itens A lista de serviços e produtos a serem cobrados.
+     * @return O valor total calculado.
+     */
     public double emitirCobranca(Tutor tutor, List<Faturavel> itens) {
         double total = 0;
         for (Faturavel item : itens) {
@@ -43,10 +59,18 @@ public class Clinica {
         return total;
     }
 
+    /**
+     * Imprime o conteúdo de um documento que implementa a interface Imprimivel.
+     * Outro exemplo de POLIMORFISMO, tratando diferentes tipos de documentos (Prontuario,
+     * CartaoVacina, FaturaTutor) com a mesma chamada de método.
+     *
+     * @param documento O documento a ser impresso no console.
+     */
     public void imprimirDocumento(Imprimivel documento) { 
         System.out.println(documento.gerarConteudoImpressao());
     }
 
+    // --- Métodos de Cadastro e Remoção (Operações CRUD) ---
     public String cadastrarTutor(Tutor novoTutor){
         if (buscarTutor(novoTutor.getCpf()) != null) {
             return "Tutor com CPF " + novoTutor.getCpf() + " já está cadastrado.";
@@ -123,6 +147,7 @@ public class Clinica {
         return "ERRO: não foi possível encontrar o funcionário selecionado";
     }
 
+    // --- Métodos de Busca ---
     public Funcionario buscarFuncionario(String cpf) {
         for (Funcionario func : funcionarios) {
             if (func.getCpf().equals(cpf)) {
@@ -189,9 +214,10 @@ public class Clinica {
     }
 
     /**
-     * Centraliza a lógica para realizar e registrar uma consulta no prontuário do animal.
+     * Centraliza a lógica para registrar uma consulta no prontuário do animal.
      * @param animal O animal que está sendo consultado.
      * @param consulta O objeto da consulta com todos os detalhes.
+     * @return Uma string de confirmação.
      */
     public String realizarConsulta(Animal animal, Consulta consulta) {
         if (animal != null && consulta != null) {
@@ -202,45 +228,21 @@ public class Clinica {
         }
     }
     
+    /**
+     * Registra a aplicação de uma vacina no cartão do animal.
+     * @param animal O animal a ser vacinado.
+     * @param vacina O tipo de vacina.
+     * @param dataDeAplicacao A data da aplicação.
+     * @param dataDeValidade A data de vencimento da vacina.
+     * @return Uma string de confirmação.
+     */
     public String aplicarVacina(Animal animal, Vacina vacina, LocalDate dataDeAplicacao, LocalDate dataDeValidade) {
         VacinaAplicada novaAplicacao = new VacinaAplicada(vacina, dataDeAplicacao, dataDeValidade);
         animal.getCartaoVacina().adicionarVacinaAplicada(novaAplicacao);
         return "Vacina '" + vacina.getNome() + "' aplicada em " + animal.getNome() + ".";
     }
 
-    /**
-     * Consulta e exibe as vacinas de um animal que vencerão nos próximos 30 dias a partir de uma data de referência.
-     * @param animal O animal a ser consultado.
-     * @param dataReferencia A data a partir da qual a verificação será feita (ex: hoje).
-     */
-    public void consultarVacinasAVencer(Animal animal, LocalDate dataReferencia) {
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataLimite = dataReferencia.plusDays(30);
-
-        System.out.println("\n--- Consultando vacinas a vencer para '" + animal.getNome() + "' (entre " + dataReferencia.format(formatador)
-                            + " e " + dataLimite.format(formatador) + ") ---");
-        
-        List<VacinaAplicada> vacinasDoAnimal = animal.getCartaoVacina().getVacinasAplicadas();
-        boolean encontrou = false;
-
-        for (VacinaAplicada vacinaApp : vacinasDoAnimal) {
-            LocalDate dataValidade = vacinaApp.getDataDeValidade();
-            
-            // Verifica se a data de validade está DEPOIS da data de referência
-            // E ANTES (ou no mesmo dia) da data limite de 30 dias.
-            if (!dataValidade.isBefore(dataReferencia) && !dataValidade.isAfter(dataLimite)) {
-                System.out.println("- Vacina: " + vacinaApp.getVacina().getNome() + 
-                                    " (Validade: " + dataValidade.format(formatador) + ")");
-                encontrou = true;
-            }
-        }
-
-        if (!encontrou) {
-            System.out.println("Nenhuma vacina encontrada com vencimento para esta data.");
-        }
-        System.out.println("--------------------------------------------------");
-    }
-
+    
     /**
      * Consulta e retorna uma lista de todas as vacinas aplicadas que vencerão no mês atual.
      * @return Uma lista de objetos VacinaAplicada com o animal associado.
@@ -261,6 +263,11 @@ public class Clinica {
         return vacinasAVencer;
     }
 
+    /**
+     * Consulta o histórico de consultas de um animal específico.
+     * Exibe as informações formatadas no console.
+     * @param animal O animal cujo histórico de consultas será consultado.
+     */
     public void consultarHistoricoConsultas(Animal animal){
         System.out.println("\n--- Histórico de Consultas de " + animal.getNome() + " ---");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");

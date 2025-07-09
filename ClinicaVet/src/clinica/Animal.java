@@ -2,6 +2,11 @@ package clinica;
 
 import java.time.LocalDate;
 
+/**
+ * Classe que representa um animal de estimação na clínica veterinária.
+ * Contém informações como nome, raça, tutor, data de nascimento,
+ * cartão de vacina e prontuário.
+ */
 public class Animal {
     private String nome;
     private String raca;
