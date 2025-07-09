@@ -1,8 +1,14 @@
-import java.util.ArrayList;
-private ArrayList<Animal> animais;
+package clinica;
 
+import java.util.ArrayList;
+
+/**
+ * Classe que representa um tutor de animais na clínica veterinária.
+ * Herda da classe Pessoa e adiciona o atributo endereço e uma lista de animais.
+ */
 public class Tutor extends Pessoa{
     protected String endereco;
+    private ArrayList<Animal> animais;
 
     public Tutor(String nome, String cpf, String email, String telefone, String endereco) {
         super(nome, cpf, email, telefone);
